@@ -1,0 +1,41 @@
+<div class="row" [formGroup]="criteriaForm">
+  
+    <div class="col-md-2 form-group">
+      <select 
+              class="form-control custom-select" 
+              formControlName="areaFormControl"
+              (change)="changeArea($event.target)">
+        <option value="" disabled>Choose an area</option>
+        <option [ngValue]="area.value" *ngFor="let area of areas | keyvalue">{{area.value}}</option>
+      </select>
+    </div>
+
+    <div class="col-md-2 form-group">
+      <select class="form-control custom-select" 
+              formControlName="categoryFormControl"
+              (change)="changeCategory($event.target)"
+              [disabled]="!this.selectedArea">
+        <option value="" disabled>Choose a category</option>
+        <option [ngValue]="category.value" *ngFor="let category of categories | keyvalue">{{category.value}}</option>
+      </select>
+    </div>
+    
+    <div class="col-md-7">
+      <div class="input-group">
+        <input type="text" 
+                class="form-control form-control-borderless"
+                formControlName="searchInputFormControl"
+                placeholder="Search" 
+                (keyup.enter)="onEnter()" />
+        <span class="input-group-addon">
+            <button type="submit" (click)="onSearch()"> <span class="glyphicon glyphicon-search"></span> </button>  
+        </span>
+      </div>
+    </div>
+
+    <div class="col-md-1">
+      <button class="btn btn-default" (click)="onReset()">reset</button>
+    </div>
+
+
+</div>

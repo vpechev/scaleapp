@@ -1,0 +1,25 @@
+<app-criteria (searchResultQuestionsEmitter)="getFilteredQuestions($event)"></app-criteria>
+<h2>Questions feed</h2>
+<div *ngFor="let q of questions">
+  <div class="row bg-{{q.complexity | complexityColorPipe}}">
+    <div class="col-md-1">
+      <label>Area:</label>
+      <p>{{q.area}}</p>
+    </div>
+    <div class="col-md-1">
+      <label>Category:</label>
+      <p>{{q.category}}</p>
+    </div>
+    <div class="col-md-4">
+      <label>Question:</label>
+      <p>{{q.question}}</p>
+    </div>
+    <div class="col-md-4">
+        <label>Answer:</label>
+        <p>{{q.answer}}</p>
+    </div>
+    <div class="col-md-1">
+      <button mat-raised-button (click)="openDialog(q)">View</button>
+    </div>
+  </div>
+</div>
