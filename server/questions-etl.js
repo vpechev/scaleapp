@@ -1,8 +1,20 @@
-const csv = require('csv-parser');
-const fs = require('fs');
+const csvParser = require('./csv-parser');
+    
+function etl() {
+    console.log('START');
+    let fileName = 'Java.csv';
+    let collectionName = fileName.substring(0, fileName.lastIndexOf('.'));
+    let questionsArray = csvParser.parseCsvToJsonArray(fileName);
 
-let questionsArray = csvParser.parseCsvToJsonArray('Java.csv')
+    console.log("questions-etl.js => QuestionsArr " + questionsArray);
 
-console.log("questions-etl.js => QuestionsArr " + questionsArray)
+    csvParser.dropCollection(collectionName);
 
+    // csvParser.storeToDb(collectionName, questionsArr);
+    
+    console.log('DONE! ');
+}
 
+(()=>{
+    etl();
+})();

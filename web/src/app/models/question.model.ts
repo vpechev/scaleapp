@@ -6,7 +6,7 @@ export class Question {
     constructor(public id: string,
                 public question: string, 
                 public answer: string,
-                public area: Area,
-                public category: Category,
+                public area: string,
+                public category: string,
                 public complexity: Complexity){}
 }

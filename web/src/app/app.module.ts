@@ -7,9 +7,10 @@ import { AppComponent } from './app.component';
 import { CriteriaComponent } from './criteria/criteria.component';
 import { NotesComponent } from './notes/notes.component';
 import { FeedComponent } from './feed/feed.component';
-import { ComplexityColorPipePipe } from './pipes/complexity-color-pipe.pipe';
+import { ComplexityColorPipe } from './pipes/complexity-color.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { QuestionOverviewDialogComponent } from './question-overview-dialog/question-overview-dialog.component';
+import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { QuestionOverviewDialogComponent } from './question-overview-dialog/ques
     NotesComponent,
     QuestionOverviewDialogComponent,
     FeedComponent,
-    ComplexityColorPipePipe
+    ComplexityColorPipe,
+    EnumToArrayPipe
   ],
   imports: [
     BrowserModule,

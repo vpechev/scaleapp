@@ -5,8 +5,8 @@
               class="form-control custom-select" 
               formControlName="areaFormControl"
               (change)="changeArea($event.target)">
-        <option value="" disabled>Choose an area</option>
-        <option [ngValue]="area.value" *ngFor="let area of areas | keyvalue">{{area.value}}</option>
+        <option value=null disabled [selected]="!selectedArea">Choose an area</option>
+        <option [ngValue]="areas[area]" *ngFor="let area of keys(areas)">{{areas[area]}}</option>
       </select>
     </div>
 
@@ -15,8 +15,8 @@
               formControlName="categoryFormControl"
               (change)="changeCategory($event.target)"
               [disabled]="!this.selectedArea">
-        <option value="" disabled>Choose a category</option>
-        <option [ngValue]="category.value" *ngFor="let category of categories | keyvalue">{{category.value}}</option>
+        <option value=null disabled [selected]="!selectedCategory">Choose a category</option>
+        <option [ngValue]="categories[category]" *ngFor="let category of keys(categories)">{{categories[category]}}</option>
       </select>
     </div>
     
@@ -26,7 +26,7 @@
                 class="form-control form-control-borderless"
                 formControlName="searchInputFormControl"
                 placeholder="Search" 
-                (keyup.enter)="onEnter()" />
+                (keyup.enter)="onSearch()" />
         <span class="input-group-addon">
             <button type="submit" (click)="onSearch()"> <span class="glyphicon glyphicon-search"></span> </button>  
         </span>

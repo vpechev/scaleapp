@@ -41,9 +41,16 @@ export class DataLoaderService {
       });
   }
 
-  public search(searchValue: string) : Question {
-    	return this.serverData.find(x => {
-        return x.question.includes(searchValue) || x.answer.includes(searchValue) 
+  public search(searchValue: string, area: string, category: string) : Question {
+      return this.serverData.find(x => {
+
+        if(!!area && !!category) {
+          return x.area === area && x.category === category && (x.question.includes(searchValue) || x.answer.includes(searchValue));
+        } else if(!!area){
+          return x.area === area && (x.question.includes(searchValue) || x.answer.includes(searchValue));
+        } else {
+          return x.question.includes(searchValue) || x.answer.includes(searchValue);
+        }
       });
   }
 }
