@@ -1,0 +1,13 @@
+{
+    "ScaleAppConfig" : {
+        "inputSheetsNames" : [
+            "Java.csv"
+        ],
+        "dbConfig" : {
+            "host": "localhost",
+            "port": 27017,
+            "dbName": "scaleApp",
+            "questionsCollectionName" : "questions"
+        }
+    }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "scaleapp-server",
+  "version": "1.0.0",
+  "description": "it will do all the server side tasks for the application",
+  "main": "questions-etl.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "vpechev",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.2.4",
+    "csv-parser": "^2.3.0",
+    "mongodb": "^3.4.1"
+  }
+}
