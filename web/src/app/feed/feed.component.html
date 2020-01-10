@@ -1,7 +1,7 @@
 <app-criteria (searchResultQuestionsEmitter)="getFilteredQuestions($event)"></app-criteria>
 <h2>Questions feed</h2>
 <div *ngFor="let q of questions">
-  <div class="row bg-{{q.complexity | complexityColorPipe}}">
+  <div class="row bg-{{q.complexity | complexityColor}}">
     <div class="col-md-1">
       <label>Area:</label>
       <p>{{q.area}}</p>

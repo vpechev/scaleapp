@@ -2,9 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Complexity } from '../enums/complexity.enum';
 
 @Pipe({
-  name: 'complexityColorPipe'
+  name: 'complexityColor'
 })
-export class ComplexityColorPipePipe implements PipeTransform {
+export class ComplexityColorPipe implements PipeTransform {
 
   transform(value: string, args?: any): any {
     switch(value) {

@@ -14,9 +14,10 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 })
 export class CriteriaComponent implements OnInit {
   criteriaForm: FormGroup;
-
-  public areas: Map<string, string>;
-  public categories: Map<string, string>;
+  
+  keys = Object.keys;
+  areas = Area;
+  categories = Category;
   
   private selectedCategory: Category;
   private selectedArea: Area;
@@ -39,30 +40,38 @@ export class CriteriaComponent implements OnInit {
       this.criteriaForm.get('categoryFormControl').disabled;
     }
 
-    this.areas = this.initAreasMap();
-    this.categories = this.initCategoriesMap();
+    this.areas = Area;
+    this.categories = Category;
    }
 
   public changeArea(areaElement) {
-    this.selectedArea = areaElement.value;
-    this.initCategoriesMap();
+    this.selectedArea = areaElement.value.substr(3);
+    this.categories = Category;
     this.searchResultQuestionsEmitter.emit(this.service.getByArea(this.selectedArea));
   }
 
   public changeCategory(categoryElement) {
-    this.selectedCategory = categoryElement.value;
+    this.selectedCategory = categoryElement.value.substr(3);
     this.searchResultQuestionsEmitter.emit(this.service.getByAreaAndCategory(this.selectedArea, this.selectedCategory));
   }
 
   public onSearch() {
     let searchedValue = this.criteriaForm.get('searchInputFormControl').value;
     if(!!searchedValue) {
-      let result = this.service.search(searchedValue);
+      let result = this.service.search(searchedValue, this.selectedArea, this.selectedCategory);
       
       if(!!result){
         this.openDialog(result);
+        this.criteriaForm.controls['searchInputFormControl'].reset();
       }
     }
+  }
+
+  onReset() {
+    this.criteriaForm.reset();
+    this.selectedArea = null;
+    this.selectedCategory = null;
+    this.searchResultQuestionsEmitter.emit(this.service.getRandomQuestions());  
   }
 
   private openDialog(selectedQuestion: Question): void {
@@ -77,28 +86,5 @@ export class CriteriaComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
-  }
-
-  onReset() {
-    this.criteriaForm.reset();
-  }
-
-  private initAreasMap() {
-    let areas = new Map();
-    for (let item in Area) {
-      areas.set(item, Area[item]);
-    }
-
-    return areas;
-  }
-
-  private initCategoriesMap() {
-    let categories = new Map();
-
-    for (let item in Category) {
-      categories.set(item, Category[item]);
-    }
-
-    return categories;
   }
 }
