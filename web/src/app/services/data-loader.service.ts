@@ -2,55 +2,66 @@ import { Injectable } from '@angular/core';
 import { Question } from '../models/question.model';
 import { Area } from '../enums/area.enum';
 import { Category } from '../enums/category.enum';
-import { Complexity } from '../enums/complexity.enum';
+import { HttpClient } from '@angular/common/http';
+import {Observable } from 'rxjs';
+import UrlBuilder from 'rest-api-url-builder';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataLoaderService {
-  constructor() { }
+  private options = {
+    'baseURL': 'http://localhost:4200/api'
+  };
+  
+  private routes = {
+    'searchQuestions': '/questions/search',
+    'randomQuestions': '/questions/random'
+  };
 
-  private serverData = [
-    new Question("1", "I want to ask you smth but it is very long long long long message. Longer than expected.", "Here is a sample answer of your questions. Here is a sample answer of your questions. Here is a sample answer of your questions. Here is a sample answer of your questions. Here is a sample answer of your questions. Here is a sample answer of your questions", Area.java, Category.spring, Complexity.easy),
-    new Question("2", "I have another questions", "and another answer from me", Area.database, Category.sql, Complexity.standard),
-    new Question("3", "Do you have soft skills?", "No I don't have.... :( ", Area.database, Category.docker, Complexity.master)
-  ]
+  private urlBuilder = new UrlBuilder(this.routes, this.options);
 
-  public getRandomQuestions() : Question[] {
-      return this.serverData.slice(0,2)
+  constructor(private httpClient: HttpClient) { }
+
+  public getRandomQuestions(count: number) : Observable<Question[]> {
+    const searchURL = this.urlBuilder.build('randomQuestions')
+    .setQueryParameter('count', count)
+    .get();
+
+    return this.httpClient.get(searchURL) as Observable<Question[]>;
   }
 
-  public getByArea(area: Area) : Question[] {
-      return this.serverData.filter(x => {
-        if(!!area) {
-          return x.area === area
-        } else {
-          return this.getRandomQuestions();
-        }
-      });
+  public getByArea(area: Area) : Observable<Question[]> {
+    const searchURL = this.urlBuilder.build('searchQuestions')
+    .setQueryParameter('area', area)
+    .get();
+    return this.httpClient.get(searchURL) as Observable<Question[]>;
   }
 
-  public getByAreaAndCategory(area: Area, category: Category) : Question[] {
-      return this.serverData.filter(x => {
-        if(!!category) {
-          return x.area === area && x.category === category;
-        } else {
-          return x.area === area;
-        }
-        
-      });
+  public getByAreaAndCategory(area: Area, category: Category) : Observable<Question[]> {
+    const searchURL = this.urlBuilder.build('searchQuestions')
+    .setQueryParameter('area', area)
+    .setQueryParameter('category', category)
+    .get();
+
+    return this.httpClient.get(searchURL) as Observable<Question[]>;
   }
 
-  public search(searchValue: string, area: string, category: string) : Question {
-      return this.serverData.find(x => {
+  public search(searchValue: string, area: string, category: string) : Observable<Question[]> {
 
-        if(!!area && !!category) {
-          return x.area === area && x.category === category && (x.question.includes(searchValue) || x.answer.includes(searchValue));
-        } else if(!!area){
-          return x.area === area && (x.question.includes(searchValue) || x.answer.includes(searchValue));
-        } else {
-          return x.question.includes(searchValue) || x.answer.includes(searchValue);
-        }
-      });
+    const searchUrlBuilder = this.urlBuilder.build('searchQuestions');
+    if(!!area) {
+      searchUrlBuilder.setQueryParameter('area', area);
+    }
+
+    if(!!category) {
+      searchUrlBuilder.setQueryParameter('category', category)
+    }
+
+    if(!!searchValue) {
+      searchUrlBuilder.setQueryParameter('key', searchValue)
+    }
+    
+    return this.httpClient.get(searchUrlBuilder.get()) as Observable<Question[]>;
   }
 }

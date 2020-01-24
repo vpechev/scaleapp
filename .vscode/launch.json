@@ -7,7 +7,6 @@
         {
             "type": "node",
             "request": "launch",
-<<<<<<< HEAD
             "name": "Questions-etl",
             "program": "${workspaceFolder}/questions-etl/src/questions-etl.js",
             "cwd": "${workspaceRoot}"
@@ -28,13 +27,5 @@
         //     "preLaunchTask": "ts-node ./src/server.ts",
         //     "outFiles": ["${workspaceFolder}/out/**/*.js"]
         //   }
-=======
-            "name": "Launch Data loader",
-            "program": "${workspaceFolder}\\server\\questions-etl.js",
-            "outFiles": [
-                "${workspaceFolder}/**/*.js"
-            ]
-        }
->>>>>>> 4c09496c1e181481fc0a1e8d047638c2cc2ea8b1
     ]
 }

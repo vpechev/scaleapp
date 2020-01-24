@@ -47,23 +47,31 @@ export class CriteriaComponent implements OnInit {
   public changeArea(areaElement) {
     this.selectedArea = areaElement.value.substr(3);
     this.categories = Category;
-    this.searchResultQuestionsEmitter.emit(this.service.getByArea(this.selectedArea));
+
+    this.service.getByArea(this.selectedArea).subscribe((res : Question[])=>{
+      console.log(res);
+      this.searchResultQuestionsEmitter.emit(res);
+    });
   }
 
   public changeCategory(categoryElement) {
     this.selectedCategory = categoryElement.value.substr(3);
-    this.searchResultQuestionsEmitter.emit(this.service.getByAreaAndCategory(this.selectedArea, this.selectedCategory));
+
+    this.service.getByAreaAndCategory(this.selectedArea, this.selectedCategory).subscribe((res : Question[])=>{
+      console.log(res);
+      this.searchResultQuestionsEmitter.emit(res);
+    });
   }
 
   public onSearch() {
     let searchedValue = this.criteriaForm.get('searchInputFormControl').value;
     if(!!searchedValue) {
-      let result = this.service.search(searchedValue, this.selectedArea, this.selectedCategory);
-      
-      if(!!result){
-        this.openDialog(result);
-        this.criteriaForm.controls['searchInputFormControl'].reset();
-      }
+      this.service.search(searchedValue, this.selectedArea, this.selectedCategory).subscribe((result : Question[])=>{
+        if(!!result){
+          this.openDialog(result[0]);
+          this.criteriaForm.controls['searchInputFormControl'].reset();
+        }
+      }); 
     }
   }
 
@@ -71,7 +79,10 @@ export class CriteriaComponent implements OnInit {
     this.criteriaForm.reset();
     this.selectedArea = null;
     this.selectedCategory = null;
-    this.searchResultQuestionsEmitter.emit(this.service.getRandomQuestions());  
+    this.service.getRandomQuestions(10).subscribe((res : Question[])=>{
+      console.log(res);
+      this.searchResultQuestionsEmitter.emit(res);
+    });  
   }
 
   private openDialog(selectedQuestion: Question): void {

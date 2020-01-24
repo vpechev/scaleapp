@@ -16,7 +16,10 @@ export class FeedComponent implements OnInit {
               private service: DataLoaderService) { }
 
   ngOnInit() {
-    this.questions = this.service.getRandomQuestions();
+    this.service.getRandomQuestions(10).subscribe((res : Question[])=>{
+      console.log(res);
+      this.questions = res as Question[];
+    });  
   }
 
   openDialog(selectedQuestion: Question): void {

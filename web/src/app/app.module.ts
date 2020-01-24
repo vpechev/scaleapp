@@ -11,6 +11,7 @@ import { ComplexityColorPipe } from './pipes/complexity-color.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { QuestionOverviewDialogComponent } from './question-overview-dialog/question-overview-dialog.component';
 import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
     LocalMaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    LocalMaterialModule
+    LocalMaterialModule,
+    HttpClientModule
   ],
   entryComponents: [QuestionOverviewDialogComponent],
   providers: [],

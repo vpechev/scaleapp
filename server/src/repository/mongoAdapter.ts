@@ -11,7 +11,7 @@ const url = `mongodb://${dbConfig.host}:${dbConfig.port}`;
 export class MongoAdapter {
     public connectToMongo(callback : any) : Promise<any> {
         return new Promise(function(resolve) {
-            MongoClient.connect(url, function(err: any, db: any) {
+            MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err: any, db: any) {
                 if(err) {
                     console.log('Error in mongoAdapter: ' + err);
                 }
