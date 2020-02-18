@@ -1,12 +1,11 @@
 <div class="row" [formGroup]="criteriaForm">
   
     <div class="col-md-2 form-group">
-      <select 
-              class="form-control custom-select" 
+      <select class="form-control custom-select" 
               formControlName="areaFormControl"
               (change)="changeArea($event.target)">
-        <option value=null disabled [selected]="!selectedArea">Choose an area</option>
-        <option [ngValue]="areas[area]" *ngFor="let area of keys(areas)">{{areas[area]}}</option>
+        <option value=null disabled [selected]="!selectedAreaKey">Choose an area</option>
+        <option [ngValue]="area.key" *ngFor="let area of areas">{{area.value}}</option>
       </select>
     </div>
 
@@ -14,13 +13,22 @@
       <select class="form-control custom-select" 
               formControlName="categoryFormControl"
               (change)="changeCategory($event.target)"
-              [disabled]="!this.selectedArea">
-        <option value=null disabled [selected]="!selectedCategory">Choose a category</option>
-        <option [ngValue]="categories[category]" *ngFor="let category of keys(categories)">{{categories[category]}}</option>
+              [disabled]="!this.selectedAreaKey">
+        <option value=null disabled [selected]="!selectedCategoryKey">Choose a category</option>
+        <option [ngValue]="category" *ngFor="let category of categories">{{category.value}}</option>
+      </select>
+    </div>
+
+    <div class="col-md-2 form-group">
+      <select class="form-control custom-select" 
+              formControlName="complexityFormControl"
+              (change)="changeComplexity($event.target)">
+        <option value=null disabled [selected]="!selectedComplexityKey">Choose complexity</option>
+        <option [ngValue]="complexity.key" *ngFor="let complexity of complexities">{{complexity.value}}</option>
       </select>
     </div>
     
-    <div class="col-md-7">
+    <div class="col-md-5">
       <div class="input-group">
         <input type="text" 
                 class="form-control form-control-borderless"

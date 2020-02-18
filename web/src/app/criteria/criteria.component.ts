@@ -1,11 +1,13 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Area } from '../enums/area.enum';
-import { Category } from '../enums/category.enum';
 import { DataLoaderService } from '../services/data-loader.service';
 import { Question } from '../models/question.model';
 import { MatDialog } from '@angular/material/dialog';
 import { QuestionOverviewDialogComponent } from '../question-overview-dialog/question-overview-dialog.component';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { DropdownsService } from '../services/dropdowns.service';
+import { Area } from '../models/area.model';
+import { Complexity } from '../models/complexity.model';
+import { Category } from '../models/category.model';
 
 @Component({
   selector: 'app-criteria',
@@ -16,49 +18,67 @@ export class CriteriaComponent implements OnInit {
   criteriaForm: FormGroup;
   
   keys = Object.keys;
-  areas = Area;
-  categories = Category;
-  
-  private selectedCategory: Category;
-  private selectedArea: Area;
+  categories : Category[];
+  complexities : Complexity[];
+  areas : Area[];
+
+  private selectedCategoryKey: string;
+  private selectedAreaKey: string;
+  private selectedComplexityKey: string;
 
   @Output() searchResultQuestionsEmitter = new EventEmitter<Question[]>();
   
   constructor(public dialog: MatDialog, 
               private formBuilder: FormBuilder,
-              private service: DataLoaderService) {
+              private service: DataLoaderService,
+              private dropdownsService: DropdownsService) {
   }
 
   ngOnInit() {
     this.criteriaForm = this.formBuilder.group({
       areaFormControl: new FormControl(''),
       categoryFormControl: new FormControl(''),
+      complexityFormControl: new FormControl(''),
       searchInputFormControl: new FormControl('')
     });
 
-    if(!this.selectedArea) {
+    if(!this.selectedAreaKey) {
       this.criteriaForm.get('categoryFormControl').disabled;
     }
 
-    this.areas = Area;
-    this.categories = Category;
+    this.dropdownsService.getAllAreas().subscribe((res : Area[])=> {
+      this.areas = res;
+    });
+
+    this.dropdownsService.getComplexityOptions().subscribe((res : Area[])=> {
+      this.complexities = res;
+    });
+
+    this.getRandomQuestions();
    }
 
   public changeArea(areaElement) {
-    this.selectedArea = areaElement.value.substr(3);
-    this.categories = Category;
+    this.selectedAreaKey = areaElement.value.substr(3);
+    this.categories = this.areas.find(x => x.key === this.selectedAreaKey).categories;
+    this.selectedCategoryKey = null;
 
-    this.service.getByArea(this.selectedArea).subscribe((res : Question[])=>{
-      console.log(res);
+    this.service.getByArea(this.selectedAreaKey).subscribe((res : Question[]) => {
       this.searchResultQuestionsEmitter.emit(res);
     });
   }
 
   public changeCategory(categoryElement) {
-    this.selectedCategory = categoryElement.value.substr(3);
+    this.selectedCategoryKey = categoryElement.value.substr(3);
 
-    this.service.getByAreaAndCategory(this.selectedArea, this.selectedCategory).subscribe((res : Question[])=>{
-      console.log(res);
+    this.service.getByAreaAndCategory(this.selectedAreaKey, this.selectedCategoryKey).subscribe((res : Question[]) => {
+      this.searchResultQuestionsEmitter.emit(res);
+    });
+  }
+
+  public changeComplexity(complexityElement) {
+    this.selectedComplexityKey = complexityElement.value.substr(3);
+
+    this.service.getByComplexity(this.selectedComplexityKey).subscribe((res : Question[]) => {
       this.searchResultQuestionsEmitter.emit(res);
     });
   }
@@ -66,7 +86,7 @@ export class CriteriaComponent implements OnInit {
   public onSearch() {
     let searchedValue = this.criteriaForm.get('searchInputFormControl').value;
     if(!!searchedValue) {
-      this.service.search(searchedValue, this.selectedArea, this.selectedCategory).subscribe((result : Question[])=>{
+      this.service.search(searchedValue, this.selectedAreaKey, this.selectedCategoryKey, this.selectedComplexityKey).subscribe((result : Question[])=>{
         if(!!result){
           this.openDialog(result[0]);
           this.criteriaForm.controls['searchInputFormControl'].reset();
@@ -77,10 +97,13 @@ export class CriteriaComponent implements OnInit {
 
   onReset() {
     this.criteriaForm.reset();
-    this.selectedArea = null;
-    this.selectedCategory = null;
+    this.selectedAreaKey = null;
+    this.selectedCategoryKey = null;
+    this.getRandomQuestions();
+  }
+
+  private getRandomQuestions(){
     this.service.getRandomQuestions(10).subscribe((res : Question[])=>{
-      console.log(res);
       this.searchResultQuestionsEmitter.emit(res);
     });  
   }

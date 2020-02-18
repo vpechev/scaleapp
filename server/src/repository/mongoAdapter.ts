@@ -6,7 +6,7 @@ process.env['NODE_CONFIG_DIR'] = configDirRelativePath;
 
 const config = require('config');
 const dbConfig = config.get('ScaleAppConfig.dbConfig');
-const url = `mongodb://${dbConfig.host}:${dbConfig.port}`;
+const url = `mongodb://${dbConfig.host}:${dbConfig.port}/${dbConfig.dbName}`;
 
 export class MongoAdapter {
     public connectToMongo(callback : any) : Promise<any> {
@@ -14,17 +14,12 @@ export class MongoAdapter {
             MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err: any, db: any) {
                 if(err) {
                     console.log('Error in mongoAdapter: ' + err);
+                    return;
                 }
                 
-                const collection = db.db(dbConfig.dbName).collection(dbConfig.questionsCollectionName);
+                const database = db.db(dbConfig.dbName);
 
-                // collection.createIndexes(
-                //     [
-                //         {name: 'field1', key: { 'question': 1 }}, 
-                //         {name: 'field2', key: { 'answer': 1 }}
-                //     ]);
-
-                let result = callback(collection);
+                let result = callback(database);
                 
                 db.close();
                 
@@ -32,6 +27,18 @@ export class MongoAdapter {
             });
         })
         .then((res) => res)
-        .catch((error)=>console.log(error))
+        .catch((error) => console.log(error))
+    }
+
+    public getAreaCollectionName() {
+        return dbConfig.areaCollectionName;
+    }
+
+    public getQuestionsCollectionName() {
+        return dbConfig.questionsCollectionName;
+    }
+
+    public getComplexityCollectionName() {
+        return dbConfig.complexityCollectionName;
     }
 }

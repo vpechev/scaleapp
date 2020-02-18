@@ -7,7 +7,17 @@
             "host": "localhost",
             "port": 27017,
             "dbName": "scaleApp",
+            "areaCollectionName" : "area",
+            "complexityCollectionName" : "complexity",
             "questionsCollectionName" : "questions"
+        },
+        "apiConfig": {
+            "routes": {
+                "areas" : "/api/areas",
+                "complexities" : "/api/complexities",
+                "searchQuestions": "/api/questions/search",
+                "randomQuestions": "/api/questions/random"
+            }
         }
     }
 }

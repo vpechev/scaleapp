@@ -1,22 +1,26 @@
 import { Request, Response } from 'express';
-import { QuestionsService } from '../services/QuestionsService';
-import { Area } from '../enums/area.enum';
-import { Category } from '../enums/category.enum';
-import { Complexity } from '../enums/complexity.enum';
+import { QuestionsService } from '../services/questionsService';
 
-export class QuestionsController{
+export class QuestionsController {
     private service : QuestionsService = new QuestionsService();
 
     constructor() {}
 
     public getRandomQuestions(req: Request, res: Response) {
-        this.service.getRandomQuestions(Number(req.query.count)).then(result => res.json(result));
+        let resultEntitiesCount = 10;
+        let requestEntitiesCount = Number(req.query.count);
+        
+        if(!!requestEntitiesCount) {
+            resultEntitiesCount = requestEntitiesCount; 
+        }
+        
+        this.service.getRandomQuestions(resultEntitiesCount).then(result => res.json(result));
     }
 
     public getQuestionsByCriteria(req: Request, res: Response) {
-        let area : Area = req.query.area;
-        let category : Category = req.query.category;
-        let complexity : Complexity = req.query.complexity;
+        let area = req.query.area;
+        let category = req.query.category;
+        let complexity = req.query.complexity;
         let searchedString = req.query.key;
         
         this.service.search(area, category, complexity, searchedString).then(result => res.json(result));
