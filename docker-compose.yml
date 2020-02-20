@@ -3,9 +3,68 @@ version: "3"
 services:
   mongo:
     image: "mongo:3-stretch"
-    ports:
-      - "27017:27017"
+    # volumes: 
+    #   - /data/db:/data/db
+    # ports:
+    #   - "27017:27017"
+    networks:
+      - scaleapp-network
+  
   mongo-express:
     image: "mongo-express:latest"
     ports:
       - "8081:8081"
+    depends_on:
+      - mongo
+    networks:
+      - scaleapp-network
+  
+  scaleapp-questions-etl:
+    container_name: scaleapp-questions-etl
+    build:
+      context: ./questions-etl
+      dockerfile: Dockerfile.dev
+    volumes:
+      - '/app/node_modules'
+      - './questions-etl:/app' 
+      - './config:/config'
+    depends_on:
+      - mongo
+    # ports:
+    #   - '3333:3000'
+    networks:
+      - scaleapp-network
+
+  scaleapp-server:
+    container_name: scaleapp-server
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    volumes:
+      - '/app/node_modules'
+      - './server:/app' 
+      - './config:/config' 
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongo
+    networks:
+      - scaleapp-network
+  
+  scaleapp-web:
+    container_name: scaleapp-web
+    build:
+      context: ./web
+      dockerfile: Dockerfile.dev
+    volumes:
+      - './web:/app'
+    ports:
+      - '4200:4200'
+    depends_on:
+      - scaleapp-server
+    networks:
+      - scaleapp-network
+
+networks:
+  scaleapp-network:
+    external: false

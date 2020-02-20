@@ -1,0 +1,18 @@
+[
+{
+    "key": "java",
+    "value": "Java",
+    "categories": [
+		{ "key": "common", "value": "Common knowledge" },
+        { "key": "basics", "value": "Basics" },
+        { "key": "spring", "value": "Spring" },
+        { "key": "javaEE", "value": "Java EE" },
+        { "key": "hibernate", "value": "Hibernate" }
+    ]
+}, 
+{
+   "key": "",
+	"value": "",
+	"categories": []
+}
+]

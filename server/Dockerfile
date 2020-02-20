@@ -1,13 +1,13 @@
-FROM risingstack/alpine:3.4-v6.9.4-4.2.0
+FROM node:10.15.0 as prodbuild
 
-ENV PORT 3001
-
-EXPOSE 3001
-
-COPY package.json package.json
+WORKDIR /app
+COPY ./server/package.json /app
 RUN npm install
+RUN npm install -g --force nodemon
+COPY ./server /app
+# should be changed in real PROD
+COPY ./config /config 
 
-COPY . .
-RUN npm run build
-
-CMD ["node", "dist/"]
+FROM nginx
+EXPOSE 80
+COPY --from=prodbuild /app/build /usr/share/nginx/html
