@@ -9,4 +9,4 @@ RUN npm install nodemon
 
 COPY . /app
 
-CMD node ./src/questions-etl.js
+CMD ["npm", "run", "dev"]

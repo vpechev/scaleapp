@@ -1,8 +1,8 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { of, Observable, ObservableInput } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
 import UrlBuilder from 'rest-api-url-builder';
+import { environment } from '../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
@@ -28,29 +28,13 @@ export class ConfigService implements OnInit {
 
   public initService() {
     return new Promise<boolean>((resolve: (a: boolean) => void): void => {
-      this.httpClient.get('assets/config/config.json')
-        .pipe(
-          map((x: ConfigService) => {
-            this.config = x['ScaleAppConfig']['apiConfig'];
+        this.config = environment.apiConfig;
             
-            let options = {
-              'baseURL': this.config['baseURL']
-            };
+        let options = { 'baseURL': this.config.baseURL };
 
-            this.urlBuilder = new UrlBuilder(this.config['routes'], options);
+        this.urlBuilder = new UrlBuilder(this.config.routes, options);
 
-            resolve(true);
-          }),
-          catchError((x: { status: number }, caught: Observable<void>): ObservableInput<{}> => {
-            console.log(`Error while initializing configuration ${x}`);
-            if (x.status !== 404) {
-              resolve(false);
-            }
-            
-            resolve(true);
-            return of({});
-          })
-        ).subscribe();
+        resolve(true);
    });
   }
 

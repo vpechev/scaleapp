@@ -1,19 +1,10 @@
-import { MongoAdapter } from './mongoAdapter';
+// import { MongoAdapter } from './mongoAdapter';
 import { Complexity } from '../models/complexity.model';
+import { BaseFileRepository } from './baseFileRepository';
+import { ConfigService } from '../services/configService';
 
-export class ComplexityRepository {
-    private mongoAdapter: MongoAdapter;
-    private collection: string;
-  
-    constructor() { 
-        this.mongoAdapter = new MongoAdapter();
-        this.collection = this.mongoAdapter.getComplexityCollectionName();
-    }
-
-    public getAll() : Promise<Complexity[]> {
-        let dbCollectionName = this.collection;
-        return this.mongoAdapter.connectToMongo(function(database:any) {
-            return database.collection(dbCollectionName).find().toArray();
-      });
+export class ComplexityRepository extends BaseFileRepository<Complexity> {
+    constructor(configService: ConfigService) { 
+        super(configService.getComplexitiesSchemaPathConfig());
     }
 }

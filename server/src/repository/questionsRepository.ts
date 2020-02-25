@@ -1,13 +1,14 @@
 import { Question } from '../models/question.model'
 import { MongoAdapter } from './mongoAdapter';
+import { ConfigService } from '../services/configService';
 
 export class QuestionsRepository {
     private mongoAdapter: MongoAdapter;
     private collection: string;
   
-    constructor() { 
+    constructor(configService: ConfigService) { 
         this.mongoAdapter = new MongoAdapter();
-        this.collection = this.mongoAdapter.getQuestionsCollectionName();
+        this.collection = configService.getDbConfig().collections.questionsCollectionName;
     }
 
     public getRandomQuestions(count: number) : Promise<Question[]> {

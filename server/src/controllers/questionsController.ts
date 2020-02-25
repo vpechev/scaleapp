@@ -2,9 +2,7 @@ import { Request, Response } from 'express';
 import { QuestionsService } from '../services/questionsService';
 
 export class QuestionsController {
-    private service : QuestionsService = new QuestionsService();
-
-    constructor() {}
+    constructor(private service : QuestionsService) {}
 
     public getRandomQuestions(req: Request, res: Response) {
         let resultEntitiesCount = 10;

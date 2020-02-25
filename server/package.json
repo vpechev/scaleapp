@@ -4,13 +4,16 @@
   "description": "it will do all the server side tasks for the application",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "nodemon src/server.ts",
-    "dev:debug": "nodemon --inspect src/entry.ts"
+    "local": "env NODE_ENV='local' nodemon src/server.ts",
+    "dev": "env NODE_ENV='dev' nodemon src/server.ts",
+    "prod": "env NODE_ENV='production' nodemon src/server.ts",
+    "local:debug": "env NODE_ENV='local' nodemon --inspect src/server.ts"
   },
   "author": "vpechev",
   "license": "ISC",
   "dependencies": {
     "@types/compression": "^1.0.1",
+    "@types/config": "0.0.36",
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.2",
     "@types/node": "^13.1.4",

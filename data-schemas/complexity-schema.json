@@ -1,7 +1,7 @@
 [
-	{ key: "0", value: "Fundamental" },
-	{ key: "1", value: "Easy" },
-	{ key: "2", value: "Standard" },
-	{ key: "3", value: "Advanced" },
-	{ key: "4", value: "Master" }
+	{ "key": "0", "value": "Fundamental" },
+	{ "key": "1", "value": "Easy" },
+	{ "key": "2", "value": "Standard" },
+	{ "key": "3", "value": "Advanced" },
+	{ "key": "4", "value": "Master" }
 ]

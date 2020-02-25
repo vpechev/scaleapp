@@ -1,5 +1,7 @@
 {
     "ScaleAppConfig" : {
+        "areasSchemaPath" : "../../../data-schemas/area_with_categories-schema.json",
+        "complexitiesSchemaPath" : "../../../data-schemas/complexity-schema.json",
         "inputSheetsNames" : [
             "Java.csv"
         ],
@@ -7,11 +9,14 @@
             "host": "mongo",
             "port": 27017,
             "dbName": "scaleApp",
-            "areaCollectionName" : "area",
-            "complexityCollectionName" : "complexity",
-            "questionsCollectionName" : "questions"
+            "collections" : {
+                "areaCollectionName" : "area",
+                "complexityCollectionName" : "complexity",
+                "questionsCollectionName" : "questions"
+            }
         },
         "apiConfig": {
+            "port" : 3000,
             "routes": {
                 "areas" : "/api/areas",
                 "complexities" : "/api/complexities",

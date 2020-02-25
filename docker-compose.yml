@@ -5,8 +5,8 @@ services:
     image: "mongo:3-stretch"
     # volumes: 
     #   - /data/db:/data/db
-    # ports:
-    #   - "27017:27017"
+    ports:
+      - "27017:27017"
     networks:
       - scaleapp-network
   
@@ -30,8 +30,8 @@ services:
       - './config:/config'
     depends_on:
       - mongo
-    # ports:
-    #   - '3333:3000'
+    ports:
+      - '3333:3000'
     networks:
       - scaleapp-network
 
@@ -42,10 +42,11 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - '/app/node_modules'
-      - './server:/app' 
+      - './server:/app
       - './config:/config' 
+      - './data-schemas:/data-schemas'
     ports:
-      - '3000:3000'
+      - '3003:3000'
     depends_on:
       - mongo
     networks:
@@ -59,7 +60,7 @@ services:
     volumes:
       - './web:/app'
     ports:
-      - '4200:4200'
+      - '4242:4200'
     depends_on:
       - scaleapp-server
     networks:

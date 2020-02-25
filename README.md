@@ -1,7 +1,7 @@
 # scaleapp
 an Node.js/Angular project which represents a simple application which visualize interviewing questions.
 
-## Local setup
+## Local application setup
 
 In order to bring the environment up you just need to execute the following command:
 

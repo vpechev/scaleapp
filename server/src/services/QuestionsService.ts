@@ -2,9 +2,7 @@ import { Question } from '../models/question.model'
 import { QuestionsRepository } from '../repository/questionsRepository';
 
 export class QuestionsService {
-  private repository: QuestionsRepository = new QuestionsRepository();
-
-  constructor() {}
+  constructor(private repository: QuestionsRepository) {}
 
   public getRandomQuestions(count: number) : Promise<Question[]> {
     return this.repository.getRandomQuestions(count);
