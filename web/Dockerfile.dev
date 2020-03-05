@@ -1,5 +1,5 @@
 # base image
-FROM node:10.15.0
+FROM node:10.15.0 as dev-build
 
 # install chrome for protractor tests
 # RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
@@ -14,11 +14,34 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 # install and cache app dependencies
 COPY package.json /app/package.json
+COPY angular.json /app/angular.json
+COPY tsconfig.json /app/tsconfig.json
 RUN npm install
-RUN npm install -g @angular/cli@8.3.5
+# RUN npm install -g @angular/cli@8.3.5
 
 # add app
 COPY . /app
 
-# start app
-CMD npm run start-dev
+RUN npm run build-dev
+
+# Build runtime image
+FROM nginx
+
+# Remove the default Nginx configuration file
+RUN rm -v /etc/nginx/nginx.conf
+
+# Copy a configuration file from the source nginx directory
+COPY --from=dev-build /app/nginx/fastcgi.conf /etc/nginx/
+COPY --from=dev-build /app/nginx/mime.types /etc/nginx/
+COPY --from=dev-build /app/nginx/nginx.conf /etc/nginx/
+COPY --from=dev-build /app/nginx/proxy.conf /etc/nginx/
+
+COPY --from=dev-build /app/dist/scaleapp .
+
+# ADD web /usr/share/nginx/html/
+# ADD web /var/www/html/
+
+# Append "daemon off;" to the beginning of the configuration
+# RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+
+EXPOSE 80

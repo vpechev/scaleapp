@@ -7,9 +7,11 @@
             "host": "mongo",
             "port": 27017,
             "dbName": "scaleApp",
-            "areaCollectionName" : "area",
-            "complexityCollectionName" : "complexity",
-            "questionsCollectionName" : "questions"
+            "collections" : {
+                "areaCollectionName" : "area",
+                "complexityCollectionName" : "complexity",
+                "questionsCollectionName" : "questions"
+            }
         },
         "apiConfig": {
             "port" : 3000,

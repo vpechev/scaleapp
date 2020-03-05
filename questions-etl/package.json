@@ -4,8 +4,8 @@
   "description": "it will do all the server side tasks for the application",
   "main": "questions-etl.js",
   "scripts": {
-    "local" : "env NODE_ENV='local' node ./src/questions-etl.js",
-    "dev" : "env NODE_ENV='development' node ./src/questions-etl.js",
+    "local" : "set NODE_ENV=local && node ./src/questions-etl.js",
+    "dev" : "env NODE_ENV=dev node ./src/questions-etl.js",
     "test": "test"
   },
   "author": "vpechev",

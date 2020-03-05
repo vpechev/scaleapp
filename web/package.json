@@ -7,8 +7,8 @@
     "start-prod": "ng serve --proxy-config src/environments/proxy.conf.prod.json -c prod",
     "ng": "ng",
     "build-local": "ng build --configuration=local",
-    "build-dev": "ng build --configuration = dev",
-    "build-prod": "ng build --configuration = prod",
+    "build-dev": "ng build --configuration=dev",
+    "build-prod": "ng build --configuration=prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

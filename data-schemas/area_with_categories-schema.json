@@ -1,18 +1,147 @@
-[
-{
+[{
     "key": "java",
     "value": "Java",
     "categories": [
-		{ "key": "common", "value": "Common knowledge" },
-        { "key": "basics", "value": "Basics" },
+        { "key": "abstract", "value": "Abstract keyword" },
+        { "key": "basics", "value": "Basics" },  
+        { "key": "casting", "value": "Casting" },
+        { "key": "collections", "value": "Collections" },
+        { "key": "common", "value": "Common Java knowledge" },
+        { "key": "constructor", "value": "Constructor" },
+        { "key": "dates", "value": "Dates" },
+        { "key": "enum", "value": "Enums" },
+        { "key": "equals_hashcode", "value": "Equals & hashcode" },
+        { "key": "exceptions", "value": "Error handling" },
+        { "key": "files", "value": "Files" },
+        { "key": "final", "value": "Final keyword" },
+        { "key": "garbage", "value": "Garbage collection" },
+        { "key": "generics", "value": "Generics" },
+        { "key": "nested_local_classes", "value": "Nested & local classes" },
+        { "key": "obj_relationships", "value": "Objects relationships" },
+        { "key": "oop", "value": "OOP concepts" },
+        { "key": "overload", "value": "Overload keyword" },
+        { "key": "override", "value": "Override keyword" },
+        { "key": "reflection", "value": "Reflection" },
+        { "key": "serialization", "value": "Serialization" },
+        { "key": "static", "value": "Static keyword" },
+        { "key": "string", "value": "Strings" },
+        { "key": "thread", "value": "Threads" }
+    ],
+    "_comment": "abstract,basics,casting,collections,common,constructor,dates,enum,equals_hashcode,exceptions,files,final,garbage,generics,nested_local_classes,obj_relationships,oop,overload,override,reflection,serialization,static,string,thread"
+},
+{
+    "key": "javaee",
+     "value": "Java EE",
+     "categories": [
+        { "key": "aop", "value": "AOP" },
+        { "key": "build_tools", "value": "Build tools" },
+        { "key": "ejb", "value": "EJBs" },
+        { "key": "jdbc", "value": "JDBC" },
+        { "key": "jpa", "value": "JPA" },
+        { "key": "orm", "value": "ORM" },
+        { "key": "servers", "value": "Servers & Containers" },
+        { "key": "servlets", "value": "Servlets" },
         { "key": "spring", "value": "Spring" },
-        { "key": "javaEE", "value": "Java EE" },
-        { "key": "hibernate", "value": "Hibernate" }
-    ]
+        { "key": "spring_boot", "value": "Spring Boot" }
+     ],
+     "_comment": "aop,build_tools,ejb,jdbc,jpa,orm,servers,servlets,spring,spring_boot"
 }, 
 {
-   "key": "",
-	"value": "",
-	"categories": []
+    "key": "csharp",
+     "value": "C# & ASP.NET",
+     "categories": [
+        { "key": "arrray", "value": "Arrays" },
+        { "key": "class", "value": "Classes" },
+        { "key": "constant", "value": "Constants" },
+        { "key": "delegate", "value": "Delegates" },
+        { "key": "exception", "value": "Exceptions" },
+        { "key": "object_comparison", "value": "Object comparrison" },
+        { "key": "object_pool", "value": "Object pool" },
+        { "key": "oop", "value": "OOP" },
+        { "key": "ref_out", "value": "Ref & Out keywords" },
+        { "key": "resources", "value": "Resources" },
+        { "key": "type", "value": "Types" },
+        { "key": "using", "value": "Using keyword" }
+     ],
+     "_comment": "arrray,class,constant,delegate,exception,object_comparison,object_pool,oop,ref_out,resources,type,using"
+},
+{
+    "key": "testing",
+     "value": "Testing",
+     "categories": [
+        { "key": "code_coverage", "value": "Code coverage" },
+        { "key": "common", "value": "Common" },
+        { "key": "junit", "value": "Junit" },
+        { "key": "mock", "value": "Mock" }
+     ]
+},
+{
+    "key": "frontend",
+     "value": "Front-end",
+     "categories": [
+        { "key": "angular", "value": "Angular" },
+        { "key": "common", "value": "Common" }
+     ]
+},
+{
+    "key": "db",
+     "value": "Databases",
+     "categories": [
+        { "key": "SQL", "value": "SQL" },
+        { "key": "NOSQL", "value": "NoSQL" }
+     ]
+},
+{
+    "key": "integration",
+     "value": "Integration",
+     "categories": [
+        { "key": "cicd", "value": "CI&CD" },
+        { "key": "docker", "value": "Docker" },
+        { "key": "jms", "value": "JMS" },
+        { "key": "messaging", "value": "Messaging" },
+        { "key": "soap", "value": "SOAP" },
+        { "key": "rest", "value": "REST" },
+        { "key": "xml", "value": "XML" },
+        { "key": "security", "value": "Security" } 
+     ]
+},
+{
+    "key": "sdm",
+     "value": "Software development lifecycles",
+     "categories": [
+        { "key": "common", "value": "Common" },
+        { "key": "kanban", "value": "Kanban" },
+        { "key": "scrum", "value": "Scrum" },
+        { "key": "waterfall", "value": "Waterfall" }
+     ]
+},
+{
+    "key": "os",
+     "value": "OS",
+     "categories": [
+        { "key": "common", "value": "Common" },
+        { "key": "linux", "value": "Linux" }
+     ]
+},
+{
+    "key": "common",
+     "value": "Common programming knowledge",
+     "categories": [
+        { "key": "common", "value": "Common" },
+        { "key": "characters", "value": "Characters" },
+        { "key": "design_pattern", "value": "Design patterns" },
+        { "key": "networks", "value": "Networks" },
+        { "key": "load_balancing", "value": "Load balancing" },
+        { "key": "scaling", "value": "Scaling" }        
+     ]
+},
+{
+    "key": "algorithms",
+     "value": "Algorithms",
+     "categories": [
+        { "key": "algorithms", "value": "Algorithms" },
+        { "key": "common", "value": "Common" },
+        { "key": "data_structures", "value": "Data structures" }
+     ]
 }
 ]

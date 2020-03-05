@@ -1,4 +1,5 @@
-var c = require('config');
+var path = require('path');
+const fs = require('fs');
 
 export class ConfigService {
     private dbConfig : { host: string, port: number, dbName: string, collections: { questionsCollectionName: string } };
@@ -6,13 +7,22 @@ export class ConfigService {
     private areasSchemaPath: string;
     private complexitiesSchemaPath: string;
 
-
     constructor() { 
         let configurationName = 'ScaleAppConfig';
-        this.dbConfig = c.get(`${configurationName}.dbConfig`); 
-        this.apiConfig = c.get(`${configurationName}.apiConfig`);
-        this.areasSchemaPath = c.get(`${configurationName}.areasSchemaPath`)
-        this.complexitiesSchemaPath = c.get(`${configurationName}.complexitiesSchemaPath`)
+        let environment = process.env.NODE_ENV ? process.env.NODE_ENV.trim() : 'default';
+
+        console.log("Environment: " + environment);
+
+        let configurationFilePath = path.join(__dirname, '..', '..', '..', 'config',`${environment}.json`);
+        
+        console.log("Configuration file location: " + configurationFilePath);
+
+        let configuration = JSON.parse(fs.readFileSync(configurationFilePath));
+
+        this.dbConfig = configuration[`${configurationName}`].dbConfig; 
+        this.apiConfig = configuration[`${configurationName}`].apiConfig;
+        this.areasSchemaPath = configuration[`${configurationName}`].areasSchemaPath;
+        this.complexitiesSchemaPath = configuration[`${configurationName}`].complexitiesSchemaPath;
     }
 
     public getDbConfig() {

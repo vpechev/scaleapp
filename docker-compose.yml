@@ -42,11 +42,11 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - '/app/node_modules'
-      - './server:/app
+      - './server:/app'
       - './config:/config' 
       - './data-schemas:/data-schemas'
     ports:
-      - '3003:3000'
+      - '3000:3000'
     depends_on:
       - mongo
     networks:
@@ -60,7 +60,7 @@ services:
     volumes:
       - './web:/app'
     ports:
-      - '4242:4200'
+      - '4242:80'
     depends_on:
       - scaleapp-server
     networks:

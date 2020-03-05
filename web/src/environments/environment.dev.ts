@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiConfig: {
-      baseURL: "http://localhost:4200/api",
+      baseURL: "http://localhost:4242/api",
       routes: {
         areas : "/areas",
         complexities : "/complexities",
