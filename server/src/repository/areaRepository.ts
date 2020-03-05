@@ -1,19 +1,10 @@
-import { MongoAdapter } from './mongoAdapter';
+// import { MongoAdapter } from './mongoAdapter';
 import { Area } from '../models/area.model';
+import { BaseFileRepository } from './baseFileRepository'
+import { ConfigService } from '../services/configService';
 
-export class AreaRepository {
-    private mongoAdapter: MongoAdapter;
-    private collection: string;
-  
-    constructor() { 
-        this.mongoAdapter = new MongoAdapter();
-        this.collection = this.mongoAdapter.getAreaCollectionName();
-    }
-
-    public getAll() : Promise<Area[]> {
-        let dbCollectionName = this.collection;
-        return this.mongoAdapter.connectToMongo(function(database:any) {
-            return database.collection(dbCollectionName).find().toArray();
-      });
+export class AreaRepository extends BaseFileRepository<Area> {
+    constructor(configService: ConfigService) { 
+        super(configService.getAreasSchemaPathConfig());
     }
 }

@@ -4,12 +4,12 @@ var path = require('path');
 const configDirRelativePath = path.join(__dirname, '..', '..', 'config');
 process.env['NODE_CONFIG_DIR'] = configDirRelativePath;
 
-const config = require('config');
-const inputSheetsNames = config.get('ScaleAppConfig.inputSheetsNames');
-const dbConfig = config.get('ScaleAppConfig.dbConfig');
-var url = `mongodb://${dbConfig.host}:${dbConfig.port}`;
-
 const csvParser = require('./csv-parser');
+const configService = require('./services/configService');
+
+const inputSheetsNames = configService.getInputSheetsNamesList();
+const url = configService.getDbConnectionString();
+const dbConfig = configService.getDbConfig();
 
 function run() {
     if(!inputSheetsNames) {
@@ -21,7 +21,7 @@ function run() {
 
 function storeToDb(questionsArr) {
     MongoClient.connect(url, function(err, db) {
-        db.db(`${dbConfig.dbName}`).collection(`${dbConfig.questionsCollectionName}`).insertMany(questionsArr, function(err, res) {
+        db.db(dbConfig['dbName']).collection(`${dbConfig['collections']['questionsCollectionName']}`).insertMany(questionsArr, function(err, res) {
             if (err) 
                 throw err;
 

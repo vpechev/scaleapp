@@ -1,0 +1,6 @@
+node-modules
+input-data
+
+.gitignore
+.git
+.vscode

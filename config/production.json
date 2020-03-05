@@ -1,0 +1,26 @@
+{
+    "ScaleAppConfig" : {
+        "inputSheetsNames" : [
+            "Java.csv"
+        ],
+        "dbConfig" : {
+            "host": "mongo",
+            "port": 27017,
+            "dbName": "scaleApp",
+            "collections" : {
+                "areaCollectionName" : "area",
+                "complexityCollectionName" : "complexity",
+                "questionsCollectionName" : "questions"
+            }
+        },
+        "apiConfig": {
+            "port" : 3000,
+            "routes": {
+                "areas" : "/api/areas",
+                "complexities" : "/api/complexities",
+                "searchQuestions": "/api/questions/search",
+                "randomQuestions": "/api/questions/random"
+            }
+        }
+    }
+}

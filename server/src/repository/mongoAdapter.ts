@@ -1,15 +1,20 @@
+import { ConfigService } from "../services/configService";
+
 const MongoClient = require('mongodb').MongoClient;
 
 const path = require('path');
 const configDirRelativePath = path.join(__dirname, '..', '..', '..', 'config');
 process.env['NODE_CONFIG_DIR'] = configDirRelativePath;
 
-const config = require('config');
-const dbConfig = config.get('ScaleAppConfig.dbConfig');
-const url = `mongodb://${dbConfig.host}:${dbConfig.port}/${dbConfig.dbName}`;
-
 export class MongoAdapter {
+    private configService = new ConfigService();
+    private dbConfig = this.configService.getDbConfig();
+    private readonly url = `mongodb://${this.dbConfig.host}:${this.dbConfig.port}/${this.dbConfig.dbName}`;
+
     public connectToMongo(callback : any) : Promise<any> {
+        let url = this.url;
+        let dbName = this.dbConfig.dbName;
+
         return new Promise(function(resolve) {
             MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err: any, db: any) {
                 if(err) {
@@ -17,7 +22,7 @@ export class MongoAdapter {
                     return;
                 }
                 
-                const database = db.db(dbConfig.dbName);
+                const database = db.db(dbName);
 
                 let result = callback(database);
                 
@@ -28,17 +33,5 @@ export class MongoAdapter {
         })
         .then((res) => res)
         .catch((error) => console.log(error))
-    }
-
-    public getAreaCollectionName() {
-        return dbConfig.areaCollectionName;
-    }
-
-    public getQuestionsCollectionName() {
-        return dbConfig.questionsCollectionName;
-    }
-
-    public getComplexityCollectionName() {
-        return dbConfig.complexityCollectionName;
     }
 }
