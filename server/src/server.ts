@@ -12,7 +12,11 @@ const http = require('http')
 const express = require('express')
 const app = express();
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../../config/swagger.json');
+
 app.use(cors());
+app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const routePrv = new Routes();
 const config = new ConfigService();

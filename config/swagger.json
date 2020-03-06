@@ -3,32 +3,89 @@
     "info": {
       "version": "1.0.0"
     },
-    "host": "localhost:3000",
-    "basePath": "/api/v1",
+    "basePath": "/api/",
     "schemes": ["http"],
     "produces": ["application/json"],
     "paths": {
-      "/search": {
-        "get": {
-          "tags": ["Search Text"],
-          "summary": "Search by places using opencagedata service",
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "400": {
-              "description": "Bad request"
-            }
+      "/areas" : {
+        "get" : {
+          "tags": ["Get Areas"],
+          "summary": "Expose all available areas with their corresponding categories.",
+          "responses" : {
+            "200": { "description": "OK" },
+            "500": { "description": "INTERNAL SERVER ERROR" }
+          }, 
+          "content": { "application/json": {} }
+        }
+      },
+      "/complexities" : {
+        "get" : {
+          "tags": ["Get Complexities"],
+          "summary": "Expose all available complexities.",
+          "responses" : {
+            "200": { "description": "OK" },
+            "500": { "description": "INTERNAL SERVER ERROR" }
+          }, 
+          "content": { "application/json": {} }
+        }
+      },
+      "/questions/random" : {
+        "get" : {
+          "tags": ["Get Random Questions"],
+          "summary": "Returns required amount of questions from database",
+          "responses" : {
+            "200": { "description": "OK" },
+            "500": { "description": "INTERNAL SERVER ERROR" }
           },
-          "content": {
-            "application/json": {}
-          },
+          "content": { "application/json": {} },
           "parameters": [
             {
-              "name": "q",
+              "name": "count",
               "in": "query",
-              "description": "Specifies the query string",
+              "description": "Specifies how many questions do we want",
               "required": true,
+              "type": "number"
+            }
+          ] 
+        }
+      },
+      "/questions/search" : {
+        "get": {
+          "tags": ["Perform search by criteria"],
+          "summary": "Searches for questions matching the specified criteria",
+          "responses": {
+            "200": { "description": "OK" },
+            "400": { "description": "Bad request" },
+            "500": { "description": "INTERNAL SERVER ERROR" }
+          },
+          "content": { "application/json": {} },
+          "parameters": [
+            {
+              "name": "area",
+              "in": "query",
+              "description": "Specifies the specific area of the questions. It should be a key from areas schema",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "category",
+              "in": "query",
+              "description": "Specifies the specific category for particular area for the questions. It should be a key from categories schema. If we provide category we should provide the corresponding area also.",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "complexity",
+              "in": "query",
+              "description": "Specifies the complexity for the question.",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "key",
+              "in": "query",
+              "description": "Specifies the search phrase for this particular question.",
+              "required": false,
               "type": "string"
             }
           ]
