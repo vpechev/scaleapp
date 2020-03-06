@@ -16,14 +16,29 @@ function run() {
         throw error('You need to provide input CSV files');
     }
 
-    inputSheetsNames.forEach(fileName => csvParser.parseCsvToJsonArray(fileName, (data) => storeToDb(data)));
+    xlsxFilePath = path.join(__dirname, '..', 'input-data', 'Interview questions.xlsx');
+    console.log('file path: ' + xlsxFilePath);
+    
+    let workbook = csvParser.readXlsxFile(xlsxFilePath);
+
+    let questionsArr = [];
+    inputSheetsNames.forEach(fileName => {
+        let sheet = workbook.Sheets[fileName];
+        let jsonDataArr = csvParser.parseSheetToJson(sheet);
+        jsonDataArr.forEach(x => x['area'] = fileName);
+        questionsArr = questionsArr.concat(jsonDataArr);
+    });
+    storeToDb(questionsArr);
+
+    //inputSheetsNames.forEach(fileName => csvParser.parseCsvToJsonArray(fileName, (data) => storeToDb(data)));
 }
 
 function storeToDb(questionsArr) {
-    MongoClient.connect(url, function(err, db) {
+    MongoClient.connect(url, { useUnifiedTopology: true }, function(err, db) {
         db.db(dbConfig['dbName']).collection(`${dbConfig['collections']['questionsCollectionName']}`).insertMany(questionsArr, function(err, res) {
-            if (err) 
+            if (err) {
                 throw err;
+            }
 
             console.log("Number of questions inserted: " + res.insertedCount);
             db.close();

@@ -10,9 +10,10 @@ import { FeedComponent } from './feed/feed.component';
 import { ComplexityColorPipe } from './pipes/complexity-color.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { QuestionOverviewDialogComponent } from './question-overview-dialog/question-overview-dialog.component';
-import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ConfigService } from './services/config.service';
+import { CategoryLabelPipe } from './pipes/category-label.pipe';
+import { AreaLabelPipe } from './pipes/area-label.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ConfigService } from './services/config.service';
     QuestionOverviewDialogComponent,
     FeedComponent,
     ComplexityColorPipe,
-    EnumToArrayPipe
+    CategoryLabelPipe,
+    AreaLabelPipe
   ],
   imports: [
     BrowserModule,

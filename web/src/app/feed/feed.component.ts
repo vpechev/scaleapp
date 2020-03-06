@@ -3,6 +3,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { Question } from '../models/question.model';
 import { DataLoaderService } from '../services/data-loader.service';
 import { QuestionOverviewDialogComponent } from '../question-overview-dialog/question-overview-dialog.component';
+import { Area } from '../models/area.model';
 
 @Component({
   selector: 'app-feed',
@@ -11,6 +12,7 @@ import { QuestionOverviewDialogComponent } from '../question-overview-dialog/que
 })
 export class FeedComponent implements OnInit {
   questions: Question[];
+  areas: Area[];
   
   constructor(public dialog: MatDialog, 
               private service: DataLoaderService) { }
@@ -40,5 +42,9 @@ export class FeedComponent implements OnInit {
     if(!!filteredQuestion && filteredQuestion.length > 0) {
       this.questions = filteredQuestion;
     }
+  }
+
+  getAreas(areas: Area[]) {
+    this.areas = areas;
   }
 }

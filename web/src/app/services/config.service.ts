@@ -20,7 +20,7 @@ export class ConfigService implements OnInit {
   public readonly SEACH_QUESTIONS_QUERY_PARAM_SEARCH_PHRASE_LABEL = 'key';
 
   private config: any = {};
-  private urlBuilder: UrlBuilder;
+  private options: any = {};
 
   constructor(public httpClient: HttpClient){}
   
@@ -28,12 +28,8 @@ export class ConfigService implements OnInit {
 
   public initService() {
     return new Promise<boolean>((resolve: (a: boolean) => void): void => {
-        this.config = environment.apiConfig;
-            
-        let options = { 'baseURL': this.config.baseURL };
-
-        this.urlBuilder = new UrlBuilder(this.config.routes, options);
-
+        this.config = environment.apiConfig;          
+        this.options = { 'baseURL': this.config.baseURL };
         resolve(true);
    });
   }
@@ -43,6 +39,6 @@ export class ConfigService implements OnInit {
   }
 
   public getUrlBuilder() : UrlBuilder {
-    return this.urlBuilder;
+    return new UrlBuilder(this.config.routes, this.options);
   }
 }

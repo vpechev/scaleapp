@@ -3,7 +3,19 @@
         "areasSchemaPath" : "../../../data-schemas/area_with_categories-schema.json",
         "complexitiesSchemaPath" : "../../../data-schemas/complexity-schema.json",
         "inputSheetsNames" : [
-            "Java.csv"
+            "java", 
+            "javaee", 
+            "csharp", 
+            "testing", 
+            "frontend", 
+            "db", 
+            "integration", 
+            "sdm", 
+            "os", 
+            "common", 
+            "algorithms", 
+            "practical", 
+            "softskills"
         ],
         "dbConfig" : {
             "host": "localhost",

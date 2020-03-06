@@ -1,7 +1,21 @@
 {
     "ScaleAppConfig" : {
+        "areasSchemaPath" : "../../../data-schemas/area_with_categories-schema.json",
+        "complexitiesSchemaPath" : "../../../data-schemas/complexity-schema.json",
         "inputSheetsNames" : [
-            "Java.csv"
+            "Java", 
+            "Java EE", 
+            "C#/.NET", 
+            "Testing", 
+            "Front-end", 
+            "DB", 
+            "Integration", 
+            "SDM", 
+            "OS", 
+            "Common programming knowledge", 
+            "Algorithms", 
+            "Practical excercises", 
+            "Soft skills"
         ],
         "dbConfig" : {
             "host": "mongo",

@@ -9,7 +9,10 @@
             "request": "launch",
             "name": "Questions-etl",
             "program": "${workspaceFolder}/questions-etl/src/questions-etl.js",
-            "cwd": "${workspaceRoot}"
+            "cwd": "${workspaceRoot}",
+            "env": {
+                "NODE_ENV" : "local"
+            }
         },
         {
             "type": "node",

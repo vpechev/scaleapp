@@ -12,10 +12,9 @@
     <div class="col-md-2 form-group">
       <select class="form-control custom-select" 
               formControlName="categoryFormControl"
-              (change)="changeCategory($event.target)"
-              [disabled]="!this.selectedAreaKey">
-        <option value=null disabled [selected]="!selectedCategoryKey">Choose a category</option>
-        <option [ngValue]="category" *ngFor="let category of categories">{{category.value}}</option>
+              (change)="changeCategory($event.target)">
+        <option value=null [selected]="!selectedCategoryKey">Choose a category</option>
+        <option [ngValue]="category.key" *ngFor="let category of categories">{{category.value}}</option>
       </select>
     </div>
 
@@ -23,8 +22,10 @@
       <select class="form-control custom-select" 
               formControlName="complexityFormControl"
               (change)="changeComplexity($event.target)">
-        <option value=null disabled [selected]="!selectedComplexityKey">Choose complexity</option>
-        <option [ngValue]="complexity.key" *ngFor="let complexity of complexities">{{complexity.value}}</option>
+        <option value=null [selected]="!selectedComplexityKey">Choose complexity</option>
+        <option class="bg-{{ complexity.key | complexityColor }}"
+                [ngValue]="complexity.key" 
+                *ngFor="let complexity of complexities">{{complexity.value}}</option>
       </select>
     </div>
     

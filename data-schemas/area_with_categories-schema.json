@@ -3,7 +3,6 @@
     "value": "Java",
     "categories": [
         { "key": "abstract", "value": "Abstract keyword" },
-        { "key": "basics", "value": "Basics" },  
         { "key": "casting", "value": "Casting" },
         { "key": "collections", "value": "Collections" },
         { "key": "common", "value": "Common Java knowledge" },
@@ -143,5 +142,15 @@
         { "key": "common", "value": "Common" },
         { "key": "data_structures", "value": "Data structures" }
      ]
+},
+{
+   "key": "practical",
+    "value": "Practical excercises",
+    "categories": []
+},
+{
+   "key": "softskills",
+    "value": "Soft skills",
+    "categories": []
 }
 ]

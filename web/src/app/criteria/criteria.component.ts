@@ -27,6 +27,7 @@ export class CriteriaComponent implements OnInit {
   private selectedComplexityKey: string;
 
   @Output() searchResultQuestionsEmitter = new EventEmitter<Question[]>();
+  @Output() areasEmitter = new EventEmitter<Area[]>();
   
   constructor(public dialog: MatDialog, 
               private formBuilder: FormBuilder,
@@ -42,25 +43,27 @@ export class CriteriaComponent implements OnInit {
       searchInputFormControl: new FormControl('')
     });
 
-    if(!this.selectedAreaKey) {
-      this.criteriaForm.get('categoryFormControl').disabled;
-    }
-
     this.dropdownsService.getAllAreas().subscribe((res : Area[])=> {
       this.areas = res;
+      this.areasEmitter.emit(this.areas);
     });
 
     this.dropdownsService.getComplexityOptions().subscribe((res : Area[])=> {
       this.complexities = res;
     });
 
-    this.getRandomQuestions();
-   }
+    this.onReset();
+  }
 
   public changeArea(areaElement) {
-    this.selectedAreaKey = areaElement.value.substr(3);
-    this.categories = this.areas.find(x => x.key === this.selectedAreaKey).categories;
+    this.selectedAreaKey = areaElement.value.substr(3).trim();
     this.selectedCategoryKey = null;
+    this.criteriaForm.get('categoryFormControl').reset();
+    this.categories = this.areas.find(x => x.key === this.selectedAreaKey).categories;
+
+    if(this.categories.length > 0) {
+      this.criteriaForm.get('categoryFormControl').enable();
+    }
 
     this.service.getByArea(this.selectedAreaKey).subscribe((res : Question[]) => {
       this.searchResultQuestionsEmitter.emit(res);
@@ -68,19 +71,27 @@ export class CriteriaComponent implements OnInit {
   }
 
   public changeCategory(categoryElement) {
-    this.selectedCategoryKey = categoryElement.value.substr(3);
+    if("null" != categoryElement.value) {
+      this.selectedCategoryKey = categoryElement.value.substr(3).trim();
 
-    this.service.getByAreaAndCategory(this.selectedAreaKey, this.selectedCategoryKey).subscribe((res : Question[]) => {
-      this.searchResultQuestionsEmitter.emit(res);
-    });
+      this.service.getByAreaAndCategory(this.selectedAreaKey, this.selectedCategoryKey).subscribe((res : Question[]) => {
+        this.searchResultQuestionsEmitter.emit(res);
+      });
+    } else {
+      this.selectedCategoryKey = null;
+    }
   }
 
   public changeComplexity(complexityElement) {
-    this.selectedComplexityKey = complexityElement.value.substr(3);
+    if("null" != complexityElement.value) {
+      this.selectedComplexityKey = complexityElement.value.substr(3);
 
-    this.service.getByComplexity(this.selectedComplexityKey).subscribe((res : Question[]) => {
-      this.searchResultQuestionsEmitter.emit(res);
-    });
+      this.service.getByComplexity(this.selectedComplexityKey).subscribe((res : Question[]) => {
+        this.searchResultQuestionsEmitter.emit(res);
+      });
+    } else {
+      this.selectedComplexityKey = null;
+    }
   }
 
   public onSearch() {
@@ -99,6 +110,8 @@ export class CriteriaComponent implements OnInit {
     this.criteriaForm.reset();
     this.selectedAreaKey = null;
     this.selectedCategoryKey = null;
+    this.selectedComplexityKey = null;
+    this.criteriaForm.get('categoryFormControl').disable();
     this.getRandomQuestions();
   }
 
