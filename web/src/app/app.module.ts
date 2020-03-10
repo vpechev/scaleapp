@@ -14,6 +14,8 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ConfigService } from './services/config.service';
 import { CategoryLabelPipe } from './pipes/category-label.pipe';
 import { AreaLabelPipe } from './pipes/area-label.pipe';
+import { ToastrModule } from 'ngx-toastr';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { AreaLabelPipe } from './pipes/area-label.pipe';
     FormsModule,
     ReactiveFormsModule,
     LocalMaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    ToastrModule.forRoot(),
+    AutocompleteLibModule
   ],
   entryComponents: [QuestionOverviewDialogComponent],
   providers: [{

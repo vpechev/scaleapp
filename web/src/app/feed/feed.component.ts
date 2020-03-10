@@ -19,7 +19,6 @@ export class FeedComponent implements OnInit {
 
   ngOnInit() {
     this.service.getRandomQuestions(10).subscribe((res : Question[])=>{
-      console.log(res);
       this.questions = res as Question[];
     });  
   }
@@ -33,9 +32,9 @@ export class FeedComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log('The dialog was closed');
+    // });
   }
 
   getFilteredQuestions(filteredQuestion: Question[]) {

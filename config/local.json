@@ -25,7 +25,13 @@
                 "areaCollectionName" : "area",
                 "complexityCollectionName" : "complexity",
                 "questionsCollectionName" : "questions"
-            }
+            },
+            "indexes" : [
+                { "question" : "text", "answer" : "text" },
+                { "complexity" : 1 },
+                { "area" : 1 },
+                { "category": 1 }
+            ]
         },
         "apiConfig": {
             "port" : 3003,

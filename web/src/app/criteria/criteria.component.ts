@@ -8,6 +8,7 @@ import { DropdownsService } from '../services/dropdowns.service';
 import { Area } from '../models/area.model';
 import { Complexity } from '../models/complexity.model';
 import { Category } from '../models/category.model';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-criteria',
@@ -32,7 +33,8 @@ export class CriteriaComponent implements OnInit {
   constructor(public dialog: MatDialog, 
               private formBuilder: FormBuilder,
               private service: DataLoaderService,
-              private dropdownsService: DropdownsService) {
+              private dropdownsService: DropdownsService,
+              private notifyService : NotificationService) {
   }
 
   ngOnInit() {
@@ -65,8 +67,8 @@ export class CriteriaComponent implements OnInit {
       this.criteriaForm.get('categoryFormControl').enable();
     }
 
-    this.service.getByArea(this.selectedAreaKey).subscribe((res : Question[]) => {
-      this.searchResultQuestionsEmitter.emit(res);
+    this.service.search(null, this.selectedAreaKey, null, this.selectedComplexityKey).subscribe((result : Question[])=>{
+      this.searchResultQuestionsEmitter.emit(result);
     });
   }
 
@@ -74,8 +76,8 @@ export class CriteriaComponent implements OnInit {
     if("null" != categoryElement.value) {
       this.selectedCategoryKey = categoryElement.value.substr(3).trim();
 
-      this.service.getByAreaAndCategory(this.selectedAreaKey, this.selectedCategoryKey).subscribe((res : Question[]) => {
-        this.searchResultQuestionsEmitter.emit(res);
+      this.service.search(null, this.selectedAreaKey, this.selectedCategoryKey, this.selectedComplexityKey).subscribe((result : Question[])=>{
+        this.searchResultQuestionsEmitter.emit(result);
       });
     } else {
       this.selectedCategoryKey = null;
@@ -86,8 +88,8 @@ export class CriteriaComponent implements OnInit {
     if("null" != complexityElement.value) {
       this.selectedComplexityKey = complexityElement.value.substr(3);
 
-      this.service.getByComplexity(this.selectedComplexityKey).subscribe((res : Question[]) => {
-        this.searchResultQuestionsEmitter.emit(res);
+      this.service.search(null, this.selectedAreaKey, this.selectedCategoryKey, this.selectedComplexityKey).subscribe((result : Question[])=>{
+        this.searchResultQuestionsEmitter.emit(result);
       });
     } else {
       this.selectedComplexityKey = null;
@@ -97,12 +99,8 @@ export class CriteriaComponent implements OnInit {
   public onSearch() {
     let searchedValue = this.criteriaForm.get('searchInputFormControl').value;
     if(!!searchedValue) {
-      this.service.search(searchedValue, this.selectedAreaKey, this.selectedCategoryKey, this.selectedComplexityKey).subscribe((result : Question[])=>{
-        if(!!result){
-          this.openDialog(result[0]);
-          this.criteriaForm.controls['searchInputFormControl'].reset();
-        }
-      }); 
+      this.service.search(searchedValue, this.selectedAreaKey, this.selectedCategoryKey, this.selectedComplexityKey)
+                  .subscribe((result : Question[]) => this.onSearchResponseReceived(result)); 
     }
   }
 
@@ -119,6 +117,20 @@ export class CriteriaComponent implements OnInit {
     this.service.getRandomQuestions(10).subscribe((res : Question[])=>{
       this.searchResultQuestionsEmitter.emit(res);
     });  
+  }
+
+  private onSearchResponseReceived(result: Question[]) {
+    this.criteriaForm.controls['searchInputFormControl'].reset();
+    
+    if(!!result && result.length > 0) {
+      if(result.length == 1) {
+        this.openDialog(result[0]);
+      } 
+      
+      this.searchResultQuestionsEmitter.emit(result);
+    } else {
+      this.notifyService.showWarning("","No result matches to passed search criteria");
+    }
   }
 
   private openDialog(selectedQuestion: Question): void {

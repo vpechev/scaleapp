@@ -12,7 +12,12 @@ export const environment = {
       searchQuestions: "/questions/search",
       randomQuestions: "/questions/random"
     }
-  }
+  },
+  feedbackRecipients: [
+    { name: 'Monika Pecheva', email: 'monika.pecheva@scalefocus.com' },
+    { name: 'Vladimir Pechev', email: 'vladimir.pechev@scalefocus.com' }, 
+    { name: 'Tushka Dermendzhieva', email: 'tushka@scalefocus.com' }
+  ]
 };
 
 /*

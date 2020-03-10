@@ -26,7 +26,7 @@ export class MongoAdapter {
 
                 let result = callback(database);
                 
-                db.close();
+                // db.close();
                 
                 resolve(result);
             });

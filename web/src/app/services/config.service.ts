@@ -19,7 +19,8 @@ export class ConfigService implements OnInit {
   public readonly SEACH_QUESTIONS_QUERY_PARAM_COMPLEXITY_LABEL = 'complexity';
   public readonly SEACH_QUESTIONS_QUERY_PARAM_SEARCH_PHRASE_LABEL = 'key';
 
-  private config: any = {};
+  private apiConfig: any = {};
+  private feedbackRecipients : any[];
   private options: any = {};
 
   constructor(public httpClient: HttpClient){}
@@ -28,17 +29,22 @@ export class ConfigService implements OnInit {
 
   public initService() {
     return new Promise<boolean>((resolve: (a: boolean) => void): void => {
-        this.config = environment.apiConfig;          
-        this.options = { 'baseURL': this.config.baseURL };
+        this.apiConfig = environment.apiConfig;   
+        this.feedbackRecipients = environment.feedbackRecipients;       
+        this.options = { 'baseURL': this.apiConfig.baseURL };
         resolve(true);
    });
   }
 
   public getConfig() : any[] {
-    return this.config;
+    return this.apiConfig;
   }
 
   public getUrlBuilder() : UrlBuilder {
-    return new UrlBuilder(this.config.routes, this.options);
+    return new UrlBuilder(this.apiConfig.routes, this.options);
+  }
+
+  public getFeedbackRecipientsList() : any[] {
+    return this.feedbackRecipients;
   }
 }

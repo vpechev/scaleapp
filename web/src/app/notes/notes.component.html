@@ -1,5 +1,5 @@
-<h2>Notes section</h2>
-<div [formGroup]="feedbackForm" class="col-md-5">
+<h4 class="col-md-11">Feedback form</h4>
+<div [formGroup]="feedbackForm" class="col-md-11">
     <div class="form-group">
         <input formControlName="candidateFormControl"
                 type="text" 
@@ -12,11 +12,21 @@
                 class="form-control form-control-borderless"
                 placeholder="Department" />
     </div>
-    <div class="form-group">
-        <input formControlName="feedbackRecipientFormControl"
-                type="text"         
-                class="form-control form-control-borderless"
-                placeholder="Feedback recipient's email" />
+    <div class="ng-autocomplete form-group">
+        <ng-autocomplete 
+          [data]="feedbackRecipientsMailList"
+          formControlName="feedbackRecipientFormControl"
+          [initialValue]=""
+          placeHolder="HR Recruitment recipient"
+          [searchKeyword]="keyword"
+          (selected)='selectEvent($event)'
+          (change)='onChangeSearch($event)'
+          [itemTemplate]="itemTemplate">                                 
+        </ng-autocomplete>
+         
+        <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.name"></a>
+        </ng-template>
     </div>
     <div class="form-group">
         <textarea formControlName="feedbackFormControl" 
@@ -24,5 +34,5 @@
                     cols="40" rows="40">
         </textarea>
     </div>
-    <a class="btn btn-lg btn-success" [href]="getMailUri()">Send Feedback via Email</div>
+    <a class="btn btn-lg btn-success" [href]="getMailUri()">Send Feedback via Email</a>
 </div>

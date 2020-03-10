@@ -27,7 +27,9 @@
     "@angular/platform-browser": "^8.2.14",
     "@angular/platform-browser-dynamic": "^8.2.14",
     "@angular/router": "^8.2.14",
+    "angular-ng-autocomplete": "^2.0.1",
     "core-js": "^2.6.11",
+    "ngx-toastr": "^11.0.0",
     "rest-api-url-builder": "^1.2.2",
     "rxjs": "^6.5.4",
     "zone.js": "~0.10.2"

@@ -38,7 +38,7 @@ export class QuestionsRepository {
             }
 
             if(criteria.complexity) {
-                query.complexity = criteria.complexity;
+                query.complexity = +criteria.complexity;
             }
 
             return database.collection(dbCollectionName).find(query).toArray();    

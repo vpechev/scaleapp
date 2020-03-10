@@ -15,35 +15,10 @@ export class DataLoaderService {
   }
 
   public getRandomQuestions(count: number) : Observable<Question[]> {
-    const searchURL = this.urlBuilder.build(this.configService.RANDOM_QUESTIONS_URI_LABEL).setQueryParameter('count', count).get();
-
-    return this.httpClient.get(searchURL) as Observable<Question[]>;
-  }
-
-  public getByArea(areaKey: string) : Observable<Question[]> {
     const searchURL = this.urlBuilder
-                          .build(this.configService.SEARCH_QUESTIONS_URI_LABEL)
-                          .setQueryParameter(this.configService.SEACH_QUESTIONS_QUERY_PARAM_AREA_LABEL, areaKey)
-                          .get();
-    
-    return this.httpClient.get(searchURL) as Observable<Question[]>;
-  }
-
-  public getByComplexity(areaKey: string) : Observable<Question[]> {
-    const searchURL = this.urlBuilder
-                          .build(this.configService.SEARCH_QUESTIONS_URI_LABEL)
-                          .setQueryParameter(this.configService.SEACH_QUESTIONS_QUERY_PARAM_COMPLEXITY_LABEL, areaKey)
-                          .get();
-    
-    return this.httpClient.get(searchURL) as Observable<Question[]>;
-  }
-
-  public getByAreaAndCategory(areaKey: string, categoryKey: string) : Observable<Question[]> {
-    const searchURL = this.urlBuilder
-                          .build(this.configService.SEARCH_QUESTIONS_URI_LABEL)
-                          .setQueryParameter(this.configService.SEACH_QUESTIONS_QUERY_PARAM_AREA_LABEL, areaKey)
-                          .setQueryParameter(this.configService.SEACH_QUESTIONS_QUERY_PARAM_CATEGORY_LABEL, categoryKey)
-                          .get();
+                        .build(this.configService.RANDOM_QUESTIONS_URI_LABEL)
+                        .setQueryParameter('count', count)
+                        .get();
 
     return this.httpClient.get(searchURL) as Observable<Question[]>;
   }

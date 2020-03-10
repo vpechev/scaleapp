@@ -8,7 +8,7 @@ export class QuestionsService {
     return this.repository.getRandomQuestions(count);
   }
 
-  public search(areaKey: string, categoryKey: string, complexityKey: string, searchValue: string) : Promise<Question[]> {
+  public search(areaKey: string, categoryKey: string, complexityKey: number, searchValue: string) : Promise<Question[]> {
     let criteria = {
       area: areaKey,
       category: categoryKey, 
