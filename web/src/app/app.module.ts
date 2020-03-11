@@ -16,6 +16,9 @@ import { CategoryLabelPipe } from './pipes/category-label.pipe';
 import { AreaLabelPipe } from './pipes/area-label.pipe';
 import { ToastrModule } from 'ngx-toastr';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgOptionHighlightModule } from '@ng-select/ng-option-highlight';
+import { KeyboardShortcutsModule } from 'ng-keyboard-shortcuts';  
 
 @NgModule({
   declarations: [
@@ -37,7 +40,10 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
     LocalMaterialModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    AutocompleteLibModule
+    KeyboardShortcutsModule.forRoot(),
+    AutocompleteLibModule,
+    NgSelectModule,
+    NgOptionHighlightModule
   ],
   entryComponents: [QuestionOverviewDialogComponent],
   providers: [{

@@ -12,8 +12,8 @@
                 class="form-control form-control-borderless"
                 placeholder="Department" />
     </div>
-    <div class="ng-autocomplete form-group">
-        <ng-autocomplete 
+    <div class="form-group">
+        <ng-autocomplete
           [data]="feedbackRecipientsMailList"
           formControlName="feedbackRecipientFormControl"
           [initialValue]=""
@@ -21,7 +21,8 @@
           [searchKeyword]="keyword"
           (selected)='selectEvent($event)'
           (change)='onChangeSearch($event)'
-          [itemTemplate]="itemTemplate">                                 
+          [itemTemplate]="itemTemplate"
+          class="form-control-borderless">                                 
         </ng-autocomplete>
          
         <ng-template #itemTemplate let-item>
@@ -31,7 +32,7 @@
     <div class="form-group">
         <textarea formControlName="feedbackFormControl" 
                     name="feedback form" 
-                    cols="40" rows="40">
+                    cols="44" rows="40">
         </textarea>
     </div>
     <a class="btn btn-lg btn-success" [href]="getMailUri()">Send Feedback via Email</a>

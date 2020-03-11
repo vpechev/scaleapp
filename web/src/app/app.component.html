@@ -2,8 +2,10 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-<div class="mat-app-background basic-container">
-  <div class="row">
+<ng-keyboard-shortcuts [shortcuts]="shortcuts"></ng-keyboard-shortcuts>
+<ng-keyboard-shortcuts-help [key]="'f2'" [closeKey]="'escape'" [title]="'Help'"></ng-keyboard-shortcuts-help>
+<div class="mat-app-background">
+  <div class="row container-fluid">
       <div class="col-md-9">
         <app-feed></app-feed>
       </div>

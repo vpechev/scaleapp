@@ -1,41 +1,61 @@
-<div class="row" [formGroup]="criteriaForm">
-  
+<div class="row" [formGroup]="criteriaForm" style="margin-top:15px;">
     <div class="col-md-2 form-group">
-      <select class="form-control custom-select" 
-              formControlName="areaFormControl"
-              (change)="changeArea($event.target)">
-        <option value=null disabled [selected]="!selectedAreaKey">Choose an area</option>
-        <option [ngValue]="area.key" *ngFor="let area of areas">{{area.value}}</option>
-      </select>
+      <ng-select [items]="areas"
+                  [searchable]="false"
+                  #areaSelect
+                  bindValue="key"
+                  bindLabel="value"
+                  dropdownPosition="auto"
+                  [closeOnSelect]="true"
+                  [clearable]="false"
+                  placeholder="Choose an Area"
+                  [(ngModel)]="selectedAreaKey"
+                  (ngModelChange)="changeArea()"
+                  formControlName="areaFormControl">
+      </ng-select>
+    </div>
+    
+    <div class="col-md-2 form-group">
+      <ng-select [items]="categories"
+                  [searchable]="false"
+                  #categorySelect
+                  bindValue="key"
+                  bindLabel="value"
+                  dropdownPosition="auto"
+                  [closeOnSelect]="true"
+                  [clearable]="false"
+                  placeholder="Choose a Category"
+                  [(ngModel)]="selectedCategoryKey"
+                  (ngModelChange)="changeCategory()"
+                  formControlName="categoryFormControl">
+      </ng-select>
     </div>
 
     <div class="col-md-2 form-group">
-      <select class="form-control custom-select" 
-              formControlName="categoryFormControl"
-              (change)="changeCategory($event.target)">
-        <option value=null [selected]="!selectedCategoryKey">Choose a category</option>
-        <option [ngValue]="category.key" *ngFor="let category of categories">{{category.value}}</option>
-      </select>
-    </div>
-
-    <div class="col-md-2 form-group">
-      <select class="form-control custom-select" 
-              formControlName="complexityFormControl"
-              (change)="changeComplexity($event.target)">
-        <option value=null [selected]="!selectedComplexityKey">Choose complexity</option>
-        <option class="bg-{{ complexity.key | complexityColor }}"
-                [ngValue]="complexity.key" 
-                *ngFor="let complexity of complexities">{{complexity.value}}</option>
-      </select>
+      <ng-select [items]="complexities"
+                  [searchable]="false"
+                  #complexitySelect
+                  bindValue="key"
+                  bindLabel="value"
+                  dropdownPosition="auto"
+                  [closeOnSelect]="true"
+                  [clearable]="false"
+                  placeholder="Choose Complexity"
+                  [(ngModel)]="selectedComplexityKey"
+                  (ngModelChange)="changeComplexity()"
+                  formControlName="complexityFormControl">
+      </ng-select>
     </div>
     
     <div class="col-md-5">
       <div class="input-group">
         <input type="text" 
+                #searchInput
                 class="form-control form-control-borderless"
                 formControlName="searchInputFormControl"
                 placeholder="Search" 
-                (keyup.enter)="onSearch()" />
+                (keyup.enter)="onSearch()"
+                (focus)="onFocusSearchInput()" />
         <span class="input-group-addon">
             <button type="submit" (click)="onSearch()"> <span class="glyphicon glyphicon-search"></span> </button>  
         </span>
