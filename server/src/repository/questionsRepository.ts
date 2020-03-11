@@ -26,7 +26,7 @@ export class QuestionsRepository {
             let query : any = {};
             
             if(criteria.searchValue) {
-                query['$text'] = { $search: criteria.searchValue };
+                query['$text'] = { $search: '"' + criteria.searchValue + '"'};
             }
 
             if(criteria.area) {
@@ -40,6 +40,8 @@ export class QuestionsRepository {
             if(criteria.complexity) {
                 query.complexity = +criteria.complexity;
             }
+            
+            console.log(`Query: ${JSON.stringify(query)}`)
 
             return database.collection(dbCollectionName).find(query).toArray();    
         });

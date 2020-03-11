@@ -138,7 +138,8 @@ export class CriteriaComponent implements OnInit {
       width: '500px',
       data: {
         question: selectedQuestion.question, 
-        answer: selectedQuestion.answer
+        answer: selectedQuestion.answer,
+        notes: selectedQuestion.notes
       }
     });
 
