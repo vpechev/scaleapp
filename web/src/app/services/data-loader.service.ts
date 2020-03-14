@@ -34,7 +34,7 @@ export class DataLoaderService {
       searchUrlBuilder.setQueryParameter(this.configService.SEACH_QUESTIONS_QUERY_PARAM_CATEGORY_LABEL, category);
     }
 
-    if(!!complexity) {
+    if(complexity== '0' || !!complexity) {
       searchUrlBuilder.setQueryParameter(this.configService.SEACH_QUESTIONS_QUERY_PARAM_COMPLEXITY_LABEL, complexity);
     }
 

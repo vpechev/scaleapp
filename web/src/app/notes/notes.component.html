@@ -1,5 +1,5 @@
-<h4 class="col-md-11">Feedback form</h4>
-<div [formGroup]="feedbackForm" class="col-md-11">
+<h4>Feedback form</h4>
+<div [formGroup]="feedbackForm">
     <div class="form-group">
         <input formControlName="candidateFormControl"
                 type="text" 
@@ -30,10 +30,21 @@
         </ng-template>
     </div>
     <div class="form-group">
-        <textarea formControlName="feedbackFormControl" 
-                    name="feedback form" 
-                    cols="44" rows="40">
+        <textarea customSwitches 
+                    class="form-control-borderless"
+                    formControlName="feedbackFormControl"
+                    name="feedback-form"
+                    style="border-radius:4px;" 
+                    cols="28" rows="40">
         </textarea>
     </div>
-    <a class="btn btn-lg btn-success" [href]="getMailUri()">Send Feedback via Email</a>
+    <div class="form-group custom-control custom-switch" title="Default is not hire">
+        <input type="checkbox" class="custom-control-input" id="hireSwitch" (click)="toggleHireSelection()">
+        <label class="custom-control-label disable-text" for="hireSwitch">Hire</label>
+      </div>
+    <div class="form-group">
+        <fa-icon title="Review Feedback" [icon]="faEye" size="1x" (click)="openReviewDialog()"></fa-icon>
+        <a class="pull-right btn btn-success {{!feedbackRecipientEmail ? 'disabled' : ''}}"
+            [href]="getMailUri()">Send Feedback via Email</a>
+    </div>
 </div>

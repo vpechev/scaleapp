@@ -2,27 +2,43 @@
   (searchResultQuestionsEmitter)="getFilteredQuestions($event)"
   (areasEmitter)="getAreas($event)">
 </app-criteria>
-<h2>Questions feed</h2>
+<h4>Questions feed</h4>
+<div class="row">
+  <div class="col-md-1"> <label>Area:</label> </div>
+  <div class="col-md-1"> <label>Category:</label> </div>
+  <div class="col-md-4"> <label>Question:</label> </div>
+  <div class="col-md-5"> <label>Answer:</label> </div>
+</div>
 <div *ngFor="let q of questions">
-  <div *ngIf="!!q && !!q.question" class="row bg-{{q.complexity | complexityColor}}">
+  <div *ngIf="!!q && !!q.question" 
+      class="feed-item row {{q.complexity | complexityColor}}"
+      style="border: 1px solid #ccc; border-radius: 4px;">
     <div class="col-md-1">
-      <label>Area:</label>
       <p>{{ q.area | areaLabel: areas }}</p>
     </div>
     <div class="col-md-1">
-      <label>Category:</label>
       <p>{{q.category | categoryLabel: q.area: areas }}</p>
     </div>
     <div class="col-md-4">
-      <label>Question:</label>
       <p>{{q.question}}</p>
     </div>
-    <div class="col-md-4">
-        <label>Answer:</label>
+    <div class="col-md-5">
         <p>{{q.answer}}</p>
     </div>
     <div class="col-md-1">
       <button mat-raised-button (click)="openDialog(q)">View</button>
+      <div>
+        <fa-icon title="Answered" 
+                class="{{q.complexity | correctAnsweredQuestionColor}}"
+                [icon]="checkIcon"
+                size="2x"
+                (click)="markAnsweredQuestion(q)"></fa-icon>
+        <fa-icon title="Not Answered"
+                class="{{q.complexity | incorrectAnsweredQuestionColor}} float-right"
+                [icon]="removeIcon"
+                size="2x"
+                (click)="markNotAnsweredQuestion(q)"></fa-icon>
+      </div>
     </div>
   </div>
 </div>

@@ -8,7 +8,13 @@ export class CategoryLabelPipe implements PipeTransform {
 
   transform(value: any, area, areas: Area[]): any {
     if(!!value && !!areas) {
-      return areas.find(x => x.key === area).categories.find(x => x.key === value).value;
+      let category = areas.find(x => x.key === area).categories.find(x => x.key === value);
+
+      if(!category) {
+        console.log(`category-label.pipe >>> Oops value=${value} with area: ${area}`);
+      }
+      
+      return category.value;
     }
     return value;
   }

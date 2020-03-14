@@ -1,0 +1,11 @@
+.hire-label {
+    border-radius: 8px; 
+    height: 25px; 
+    width: 35px;
+}
+
+.no-hire-label {
+    border-radius: 8px; 
+    height: 25px; 
+    width: 60px;
+}

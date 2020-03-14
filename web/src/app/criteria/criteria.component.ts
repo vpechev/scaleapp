@@ -10,7 +10,7 @@ import { Complexity } from '../models/complexity.model';
 import { Category } from '../models/category.model';
 import { NotificationService } from '../services/notification.service';
 import { NgSelectComponent } from '@ng-select/ng-select';
-import { ShortcutInput } from 'ng-keyboard-shortcuts';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-criteria',
@@ -26,6 +26,8 @@ export class CriteriaComponent implements OnInit {
   private readonly BUTTON_TILDA_KEY_CODE : number = 192;
   private readonly BUTTON_F2_KEY_CODE: number = 113;
   
+  searchIcon = faSearch;
+
   criteriaForm: FormGroup;
   
   keys = Object.keys;
@@ -136,36 +138,28 @@ export class CriteriaComponent implements OnInit {
         this.criteriaForm.get('categoryFormControl').enable();
       }
 
-      this.service.search(null, this.selectedAreaKey, null, this.selectedComplexityKey)
-                  .subscribe((result : Question[]) => this.searchResultQuestionsEmitter.emit(result));
-      this.notifyService.showSuccess("","New Search was performed");
+      this.onSearch();
     }
   }
 
   public changeCategory() {
     if(!!this.selectedCategoryKey) {
-      this.service.search(null, this.selectedAreaKey, this.selectedCategoryKey, this.selectedComplexityKey).subscribe((result : Question[])=>{
-        this.searchResultQuestionsEmitter.emit(result);
-      });
-      this.notifyService.showSuccess("","New Search was performed");
+      this.onSearch();
     }
   }
 
   public changeComplexity() {
     if(this.selectedComplexityKey == '0' || !!this.selectedComplexityKey) {
-      this.service.search(null, this.selectedAreaKey, this.selectedCategoryKey, this.selectedComplexityKey).subscribe((result : Question[])=>{
-        this.searchResultQuestionsEmitter.emit(result);
-      });
-      this.notifyService.showSuccess("","New Search was performed");
+      this.onSearch();
     }
   }
 
   public onSearch() {
     let searchedValue = this.criteriaForm.get('searchInputFormControl').value;
-    if(!!searchedValue) {
-      this.service.search(searchedValue, this.selectedAreaKey, this.selectedCategoryKey, this.selectedComplexityKey)
-                  .subscribe((result : Question[]) => this.onSearchResponseReceived(result)); 
-    }
+    
+    this.service.search(searchedValue, this.selectedAreaKey, this.selectedCategoryKey, this.selectedComplexityKey)
+                .subscribe((result : Question[]) => this.onSearchResponseReceived(result)); 
+                
     this.notifyService.showSuccess("","New Search was performed");
   }
 

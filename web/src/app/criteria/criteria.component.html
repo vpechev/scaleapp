@@ -1,5 +1,5 @@
 <div class="row" [formGroup]="criteriaForm" style="margin-top:15px;">
-    <div class="col-md-2 form-group">
+    <div title="ctrl+1 shortkey opens area dropdown" class="col-md-2 form-group">
       <ng-select [items]="areas"
                   [searchable]="false"
                   #areaSelect
@@ -15,7 +15,7 @@
       </ng-select>
     </div>
     
-    <div class="col-md-2 form-group">
+    <div title="ctrl+2 shortkey opens category dropdown" class="col-md-2 form-group">
       <ng-select [items]="categories"
                   [searchable]="false"
                   #categorySelect
@@ -31,7 +31,7 @@
       </ng-select>
     </div>
 
-    <div class="col-md-2 form-group">
+    <div title="ctrl+3 shortkey opens complexity dropdown" class="col-md-2 form-group">
       <ng-select [items]="complexities"
                   [searchable]="false"
                   #complexitySelect
@@ -47,7 +47,7 @@
       </ng-select>
     </div>
     
-    <div class="col-md-5">
+    <div title="ctrl+4 shortkey focus search input" class="col-md-5">
       <div class="input-group">
         <input type="text" 
                 #searchInput
@@ -56,15 +56,13 @@
                 placeholder="Search" 
                 (keyup.enter)="onSearch()"
                 (focus)="onFocusSearchInput()" />
-        <span class="input-group-addon">
-            <button type="submit" (click)="onSearch()"> <span class="glyphicon glyphicon-search"></span> </button>  
-        </span>
+        <button type="submit" (click)="onSearch()">
+            <fa-icon [icon]="searchIcon" class="search-icon"></fa-icon> 
+        </button>  
       </div>
     </div>
 
-    <div class="col-md-1">
-      <button class="btn btn-default" (click)="onReset()">reset</button>
+    <div title="ctrl+~ shortkey triggers reset criteria form" class="col-md-1">
+      <button class="btn btn-light" (click)="onReset()">reset</button>
     </div>
-
-
 </div>

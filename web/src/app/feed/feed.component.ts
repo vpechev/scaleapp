@@ -4,6 +4,10 @@ import { Question } from '../models/question.model';
 import { DataLoaderService } from '../services/data-loader.service';
 import { QuestionOverviewDialogComponent } from '../question-overview-dialog/question-overview-dialog.component';
 import { Area } from '../models/area.model';
+import { InterviewQuestionsService } from '../services/interview-questions.service';
+import { NotificationService } from '../services/notification.service';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-feed',
@@ -11,14 +15,18 @@ import { Area } from '../models/area.model';
   styleUrls: ['./feed.component.css']
 })
 export class FeedComponent implements OnInit {
+  checkIcon = faCheck;
+  removeIcon = faTimes;
   questions: Question[];
   areas: Area[];
   
   constructor(public dialog: MatDialog, 
-              private service: DataLoaderService) { }
+              private dataLoaderService: DataLoaderService,
+              private interviewQuestionsService: InterviewQuestionsService,
+              private notificationService: NotificationService) { }
 
   ngOnInit() {
-    this.service.getRandomQuestions(10).subscribe((res : Question[])=>{
+    this.dataLoaderService.getRandomQuestions(10).subscribe((res : Question[])=>{
       this.questions = res as Question[];
     });  
   }
@@ -33,8 +41,17 @@ export class FeedComponent implements OnInit {
       }
     });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    // });
+    // dialogRef.afterClosed().subscribe(result => {});
+  }
+
+  markAnsweredQuestion(selectedQuestion: Question): void {
+      this.interviewQuestionsService.addAnsweredQuestion(selectedQuestion);
+      this.notificationService.showInfo("","Question was answered");
+  }
+
+  markNotAnsweredQuestion(selectedQuestion: Question): void {
+    this.interviewQuestionsService.addNotAnsweredQuestions(selectedQuestion);
+    this.notificationService.showInfo("","Question was NOT answered");
   }
 
   getFilteredQuestions(filteredQuestion: Question[]) {

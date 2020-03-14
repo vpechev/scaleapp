@@ -1,0 +1,54 @@
+<h1 mat-dialog-title>Feedback Review</h1>
+<div class="row">
+    <label>Candidate: </label> {{data.candidateNames}}
+</div>
+<div class="row">
+    <label>Department: </label> {{data.department}}
+</div>
+<div class="row">
+    <p>{{data.feedback}}</p>
+</div>
+<div class="row">
+    <label>Hire recommendations: </label>
+    <span *ngIf="data.shouldHire" class="bg-success hire-label">Hire</span>
+    <span *ngIf="!data.shouldHire" class="bg-danger no-hire-label">No Hire</span>
+</div>
+
+<div class="row">
+    <mat-expansion-panel *ngIf="!!data.answeredQuestions && data.answeredQuestions.length > 0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Answered questions {{answeredQuestionsCount}}/{{totalQuestionsCount}}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row" *ngFor="let q of data.answeredQuestions">
+            <div class="col col-md-2">{{q.area | areaLabel: areas }}</div>
+            <div class="col col-md-2">{{q.category | categoryLabel: q.area: areas}}</div>
+            <div class="col col-md-8">{{q.question}}</div>
+        </div>
+    </mat-expansion-panel>
+</div>
+<div class="row">
+    <mat-expansion-panel *ngIf="!!data.notAnsweredQuestions && data.notAnsweredQuestions.length > 0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Not Answered questions {{notAnsweredQuestionsCount}}/{{totalQuestionsCount}}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row" *ngFor="let q of data.notAnsweredQuestions">
+            <div class="col col-md-1">{{q.area | areaLabel: areas }}</div>
+            <div class="col col-md-1">{{q.category | categoryLabel: q.area: areas}}</div>
+            <div class="col col-md-10">{{q.question}}</div>
+        </div>
+    </mat-expansion-panel>
+</div>
+
+<div class="row">
+    Feedback will be sent to: <span class="text-info">{{data.feedbackRecipientEmail}}</span>
+</div>
+
+<div mat-dialog-actions>
+  <button class="btn" [mat-dialog-close]="" mat-button cdkFocusInitial>OK</button>
+</div>
+
+
+
+
+
+

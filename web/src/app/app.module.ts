@@ -18,7 +18,11 @@ import { ToastrModule } from 'ngx-toastr';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgOptionHighlightModule } from '@ng-select/ng-option-highlight';
-import { KeyboardShortcutsModule } from 'ng-keyboard-shortcuts';  
+import { KeyboardShortcutsModule } from 'ng-keyboard-shortcuts';
+import { FeedbackReviewDialogComponent } from './feedback-review-dialog/feedback-review-dialog.component';  
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CorrectAnsweredQuestionColorPipe } from './pipes/correct-answered-question-color.pipe';
+import { IncorrectAnsweredQuestionColorPipe } from './pipes/incorrect-answered-question-color.pipe';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,10 @@ import { KeyboardShortcutsModule } from 'ng-keyboard-shortcuts';
     FeedComponent,
     ComplexityColorPipe,
     CategoryLabelPipe,
-    AreaLabelPipe
+    AreaLabelPipe,
+    FeedbackReviewDialogComponent,
+    CorrectAnsweredQuestionColorPipe,
+    IncorrectAnsweredQuestionColorPipe
   ],
   imports: [
     BrowserModule,
@@ -43,9 +50,10 @@ import { KeyboardShortcutsModule } from 'ng-keyboard-shortcuts';
     KeyboardShortcutsModule.forRoot(),
     AutocompleteLibModule,
     NgSelectModule,
-    NgOptionHighlightModule
+    NgOptionHighlightModule,
+    FontAwesomeModule
   ],
-  entryComponents: [QuestionOverviewDialogComponent],
+  entryComponents: [QuestionOverviewDialogComponent, FeedbackReviewDialogComponent],
   providers: [{
     provide: APP_INITIALIZER,
     useFactory: load,
